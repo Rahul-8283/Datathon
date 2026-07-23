@@ -1,61 +1,22 @@
+import { ArrowRight, ChevronDown, ShieldCheck, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Copy } from 'lucide-react';
 
-const Hero = () => {
-  return (
-    <section className="relative pt-12 pb-20 lg:pb-32">
-      <div className="container mx-auto px-4 max-w-5xl">
+const Hero = () => (
+  <section className="relative isolate overflow-hidden px-5 pb-24 pt-5 sm:px-8 lg:px-12">
+    <div className="absolute inset-x-0 top-0 -z-10 h-[680px] bg-[radial-gradient(circle_at_72%_18%,rgba(40,137,113,0.25),transparent_27%),radial-gradient(circle_at_15%_12%,rgba(198,167,91,0.12),transparent_22%)]" />
+    <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/10 bg-[#0b1b17]/75 px-4 py-3 backdrop-blur-xl sm:px-5">
+      <Link to="/" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-[#c6a75b] text-[#11231e]"><ShieldCheck size={19} strokeWidth={2.5} /></span><span><span className="font-display block text-sm font-bold tracking-tight text-white">KSP Intelligence</span><span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-200/55">Strategic Crime Hub</span></span></Link>
+      <div className="hidden items-center gap-7 text-sm text-slate-300 lg:flex"><a href="#capabilities" className="transition hover:text-white">Capabilities</a><a href="#workflow" className="transition hover:text-white">Workflow</a><a href="#mission" className="transition hover:text-white">Mission</a></div>
+      <Link to="/dashboard" className="inline-flex items-center gap-2 rounded-xl bg-[#c6a75b] px-4 py-2.5 text-sm font-bold text-[#11231e] transition hover:bg-[#e0c477]">Enter dashboard <ArrowRight size={15} /></Link>
+    </nav>
+    <div className="mx-auto grid max-w-7xl gap-14 pb-12 pt-20 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:pt-28">
+      <div><div className="mb-7 inline-flex items-center gap-2 rounded-full border border-emerald-200/15 bg-emerald-300/[0.06] px-3 py-1.5 text-xs font-semibold text-emerald-100/80"><Sparkles size={14} className="text-[#d8bb70]" />Karnataka State Police · State Crime Records Bureau</div><h1 className="font-display max-w-3xl text-4xl font-semibold leading-[1.14] tracking-[-0.045em] text-white sm:text-5xl lg:text-6xl">Intelligence that reveals the story behind every incident.</h1><p className="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">A unified intelligence workspace for turning fragmented crime records into clear geographic insight, connected investigations, and proactive action.</p><div className="mt-9 flex flex-col gap-3 sm:flex-row"><Link to="/dashboard" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#c6a75b] px-5 py-3.5 text-sm font-bold text-[#11231e] transition hover:-translate-y-0.5 hover:bg-[#e0c477]">Open command centre <ArrowRight size={17} /></Link><a href="#capabilities" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/12 bg-white/[0.035] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-white/[0.08]">Explore capabilities <ChevronDown size={17} /></a></div><div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-7 text-sm"><div><span className="font-display text-xl font-semibold text-[#d8bb70]">360°</span><span className="ml-2 text-slate-400">case intelligence</span></div><div><span className="font-display text-xl font-semibold text-[#d8bb70]">24/7</span><span className="ml-2 text-slate-400">trend monitoring</span></div><div><span className="font-display text-xl font-semibold text-[#d8bb70]">1</span><span className="ml-2 text-slate-400">connected workspace</span></div></div></div>
+      <div className="relative mx-auto w-full max-w-xl"><div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-emerald-300/15 via-transparent to-[#c6a75b]/10 blur-xl" /><div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#0c211b]/95 p-4 shadow-2xl shadow-black/35"><div className="mb-4 flex items-center justify-between px-2 pt-1"><div><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-100/45">Live intelligence view</p><p className="mt-1 text-sm font-semibold text-white">Karnataka overview</p></div><span className="rounded-full bg-emerald-300/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-200">Live</span></div><div className="relative h-72 overflow-hidden rounded-2xl border border-emerald-100/10 bg-[#102a23] sm:h-80"><div className="absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(120,200,168,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(120,200,168,.18)_1px,transparent_1px)] [background-size:38px_38px]" /><Dot className="left-[16%] top-[24%] bg-[#efcf76] ring-[#efcf76]/10" /><Dot className="left-[48%] top-[42%] bg-[#fd765d] ring-[#fd765d]/10" /><Dot className="right-[16%] top-[25%] bg-[#efcf76] ring-[#efcf76]/10" /><Dot className="bottom-[16%] left-[31%] bg-[#49c6a2] ring-[#49c6a2]/10" /><Dot className="bottom-[21%] right-[24%] bg-[#fd765d] ring-[#fd765d]/10" /><div className="absolute bottom-4 left-4 rounded-xl border border-white/10 bg-[#07110f]/80 px-3 py-2.5 backdrop-blur"><p className="text-[10px] uppercase tracking-widest text-slate-400">Emerging signal</p><p className="mt-1 text-xs font-semibold text-white">Bengaluru Urban · property crime</p></div></div><div className="mt-4 grid grid-cols-3 gap-3"><Metric label="Active alerts" value="08" tone="text-[#f3c968]" /><Metric label="Network links" value="1,284" tone="text-emerald-200" /><Metric label="Cases analysed" value="18.6k" tone="text-white" /></div></div></div>
+    </div>
+  </section>
+);
 
-        {/* Mock Navbar (matching the screenshot vibe) */}
-        <div className="flex justify-between items-center mb-12 md:mb-24 pb-4 md:pb-8">
-          <div className="text-2xl md:text-4xl font-logo tracking-widest text-gray-200">monomelt</div>
-          <div className="hidden md:flex gap-8 text-sm text-gray-400">
-            <span className="hover:text-white cursor-pointer transition-colors">GitHub</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Docs</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Data</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Zen</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Enterprise</span>
-          </div>
-          <Link to="/login" className="px-4 py-2 bg-white text-black font-bold text-sm rounded-sm hover:bg-gray-200 transition-colors flex items-center gap-2">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Try It
-          </Link>
-        </div>
-
-        {/* Badge */}
-        <div className="inline-block border border-[#222] bg-[#0a0a0a] text-gray-400 text-[10px] sm:text-xs mb-8 p-1 leading-relaxed">
-          <span className="bg-white text-black px-2 py-0.5 mr-2 font-bold inline-block">New</span>
-          <span>Introducing full AST parsing for legacy monoliths. <Link to="/login" className="text-gray-500 hover:text-white ml-1">Try it now</Link></span>
-        </div>
-
-        {/* Main Heading */}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-          The open source AI <br className="hidden md:block" /> monolith deconstructor
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-gray-400 max-w-2xl mb-12 leading-relaxed">
-          Upload your legacy codebase and let our AI agents analyze ASTs, identify bounded contexts, and generate production-ready microservices instantly.
-        </p>
-
-        {/* Terminal Box */}
-        <div className="bg-[#111] border border-[#222] rounded-sm w-full max-w-3xl overflow-hidden">
-          <div className="flex gap-4 md:gap-8 px-4 md:px-6 py-4 border-b border-[#222] text-xs md:text-sm font-bold overflow-x-auto whitespace-nowrap">
-            <span className="text-white cursor-pointer">curl</span>
-            <span className="text-gray-600 cursor-pointer hover:text-gray-400">npm</span>
-            <span className="text-gray-600 cursor-pointer hover:text-gray-400">bun</span>
-            <span className="text-gray-600 cursor-pointer hover:text-gray-400">brew</span>
-            <span className="text-gray-600 cursor-pointer hover:text-gray-400">paru</span>
-          </div>
-          <div className="px-4 md:px-6 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs md:text-sm">
-            <span className="text-gray-500 break-all sm:break-normal">curl -fsSL <span className="text-white font-bold">https://monomelt.ai/install</span> | bash</span>
-            <Copy className="w-4 h-4 text-gray-600 hover:text-white cursor-pointer transition-colors self-end sm:self-auto shrink-0" />
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-};
+const Dot = ({ className }: { className: string }) => <span className={`absolute h-3 w-3 rounded-full ring-8 ${className}`} />;
+const Metric = ({ label, value, tone }: { label: string; value: string; tone: string }) => <div className="rounded-xl border border-white/8 bg-white/[0.035] p-3"><p className="text-[10px] text-slate-400">{label}</p><p className={`font-display mt-1 text-lg font-semibold ${tone}`}>{value}</p></div>;
 
 export default Hero;

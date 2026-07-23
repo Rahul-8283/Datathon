@@ -1,36 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Space Mono', monospace;
+  margin: 0;
+  min-width: 320px;
+  background: #07110f;
+  color: #ecf5f1;
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
-.font-logo {
-  font-family: 'Silkscreen', cursive;
-  letter-spacing: 0.06em;
-}
+.font-display { font-family: 'Sora', ui-sans-serif, system-ui, sans-serif; }
 
-/* Custom Hacker Terminal Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-  border-left: 1px solid #222;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border: 1px solid #222;
-  border-radius: 0px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #07110f; }
+::-webkit-scrollbar-thumb { background: #28534a; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #3d776a; }

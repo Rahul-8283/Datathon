@@ -1,21 +1,6 @@
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const CallToAction = () => {
-  return (
-    <section className="py-24 border-t border-[#222] bg-[#0a0a0a]">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <div className="bg-[#111] border border-[#222] p-12 rounded-sm text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to break the monolith?</h2>
-          <p className="text-base text-gray-400 mb-10 max-w-2xl mx-auto">
-            Stop debating architecture in endless meetings. Let AI give you the data-driven blueprint you need today.
-          </p>
-          <Link to="/login" className="inline-block px-8 py-3 bg-white text-black hover:bg-gray-200 font-bold rounded-sm transition-colors text-sm">
-            Start Your Transformation Free
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-};
+const CallToAction = () => <section id="mission" className="px-5 pb-24 pt-8 sm:px-8 lg:px-12"><div className="mx-auto max-w-7xl overflow-hidden rounded-[1.7rem] border border-emerald-100/12 bg-[radial-gradient(circle_at_82%_20%,rgba(198,167,91,.2),transparent_25%),linear-gradient(135deg,#103128,#0b1c18)] px-7 py-12 sm:px-12 sm:py-14"><ShieldCheck className="text-[#d8bb70]" size={28} /><p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-emerald-100/55">A unified strategic intelligence hub</p><h2 className="font-display mt-4 max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">A clearer picture of crime. A stronger foundation for prevention.</h2><p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300">Bring operational information, investigative context, and analytical insight together in one secure, focused environment.</p><Link to="/dashboard" className="mt-9 inline-flex items-center gap-2 rounded-xl bg-[#c6a75b] px-5 py-3.5 text-sm font-bold text-[#11231e] transition hover:bg-[#e0c477]">Enter intelligence hub <ArrowRight size={17} /></Link></div></section>;
 
 export default CallToAction;

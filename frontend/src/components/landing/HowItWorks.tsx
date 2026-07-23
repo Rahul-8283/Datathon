@@ -1,27 +1,5 @@
-const steps = [
-  { num: '01', title: 'Upload Repository', desc: 'Securely upload your monolith zip or link your GitHub repo.' },
-  { num: '02', title: 'AI Generation', desc: 'Our FastAPI engine parses ASTs and uses LLMs to define bounded contexts.' },
-  { num: '03', title: 'Select Strategy', desc: 'Choose between Aggressive, Conservative, or Domain-Driven splits.' },
-  { num: '04', title: 'Export Code', desc: 'Download ready-to-deploy OpenAPI specs and Kubernetes manifests.' },
-];
+const steps = [['01', 'Unify the record', 'Bring validated case files, diaries, and supporting data into one controlled intelligence layer.'], ['02', 'Connect the evidence', 'Resolve shared people, locations, phones, vehicles, and Modus Operandi across jurisdictions.'], ['03', 'Detect the signal', 'Surface hotspots, associations, anomalies, and changing patterns through transparent analytics.'], ['04', 'Guide the response', 'Give investigators and leadership a shared view for timely, evidence-led decisions.']];
 
-const HowItWorks = () => {
-  return (
-    <section className="py-24 border-t border-[#222]">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <h2 className="text-3xl lg:text-4xl font-bold text-white mb-16">How it Works</h2>
-        <div className="grid md:grid-cols-4 gap-6">
-          {steps.map((step, idx) => (
-            <div key={idx} className="p-6 bg-[#111] border border-[#222] rounded-sm">
-              <div className="text-3xl font-black text-gray-700 mb-6">{step.num}</div>
-              <h3 className="text-base font-bold text-white mb-2">{step.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+const HowItWorks = () => <section id="workflow" className="px-5 py-24 sm:px-8 lg:px-12"><div className="mx-auto max-w-7xl"><div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d8bb70]">Intelligence workflow</p><h2 className="font-display mt-4 text-3xl font-semibold tracking-[-0.035em] text-white sm:text-4xl">Designed to turn data into direction.</h2><p className="mt-5 max-w-md text-sm leading-7 text-slate-400">Every stage keeps the intelligence chain connected—from raw information and evidence to an informed operational response.</p></div><div className="grid gap-3">{steps.map(([number, title, text]) => <div key={number} className="flex gap-5 rounded-2xl border border-white/8 bg-white/[0.025] p-5 sm:p-6"><span className="font-display text-xl font-semibold text-[#d8bb70]">{number}</span><div><h3 className="font-display text-base font-semibold text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{text}</p></div></div>)}</div></div></div></section>;
 
 export default HowItWorks;

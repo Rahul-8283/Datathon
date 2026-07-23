@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
-import 'lenis/dist/lenis.css'; // Recommended by lenis docs
+import 'lenis/dist/lenis.css';
 import Hero from '../components/landing/Hero';
 import Features from '../components/landing/Features';
 import HowItWorks from '../components/landing/HowItWorks';
@@ -8,29 +8,14 @@ import CallToAction from '../components/landing/CallToAction';
 
 const LandingPage = () => {
   useEffect(() => {
-    // Initialize Lenis specifically for the landing page
-    const lenis = new Lenis({
-      autoRaf: true, // Let lenis handle requestAnimationFrame internally if version supports it
-    });
-
-    // Cleanup lenis when leaving the landing page so it doesn't affect Dashboard/Login
-    return () => {
-      lenis.destroy();
-    };
+    const lenis = new Lenis({ autoRaf: true, lerp: 0.085 });
+    return () => lenis.destroy();
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-gray-400 selection:bg-emerald-500/30 font-sans">
-      <main>
-        <Hero />
-        <Features />
-        <HowItWorks />
-        <CallToAction />
-      </main>
-
-      <footer className="py-8 text-center text-gray-600 text-sm border-t border-gray-800">
-        <p>© 2026 MonoMELT Transformation Platform. Built for OpenAI Build Week.</p>
-      </footer>
+    <div className="min-h-screen overflow-hidden bg-[#07110f] text-slate-200 selection:bg-[#c6a75b]/35">
+      <main><Hero /><Features /><HowItWorks /><CallToAction /></main>
+      <footer className="border-t border-white/8 px-5 py-7 text-center text-xs text-slate-500">© 2026 Karnataka State Police · Strategic Crime Intelligence Hub</footer>
     </div>
   );
 };

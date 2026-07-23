@@ -1,126 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
-import { LogOut, FolderGit2, Activity, Terminal } from 'lucide-react';
+import { Activity, ArrowUpRight, Bell, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp } from 'lucide-react';
 
-const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+const weeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
+const alerts = [
+  ['Priority', 'Property crime activity elevated', 'Bengaluru Urban · 18% above baseline', 'amber'],
+  ['Network', 'New association pattern detected', 'Mysuru · 6 linked case entities', 'emerald'],
+  ['Review', 'Anomalous MO signature', 'Hubballi-Dharwad · 3 related incidents', 'coral'],
+];
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate('/');
-      } else {
-        setUser(session.user);
-      }
-      setLoading(false);
-    };
-    
-    checkUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate('/');
-      } else {
-        setUser(session.user);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-gray-500">
-        [system] Initializing Workspace...
+const Dashboard = () => (
+  <div className="min-h-screen bg-[#07110f] text-slate-200">
+    <header className="sticky top-0 z-20 border-b border-white/8 bg-[#091713]/90 px-4 py-3 backdrop-blur-xl sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4">
+        <div className="flex items-center gap-3"><button className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-slate-300 lg:hidden"><Menu size={18} /></button><span className="grid h-9 w-9 place-items-center rounded-xl bg-[#c6a75b] text-[#10231d]"><ShieldCheck size={19} /></span><div><p className="font-display text-sm font-bold text-white">KSP Intelligence</p><p className="text-[10px] font-semibold uppercase tracking-[.16em] text-emerald-100/45">Command centre</p></div></div>
+        <div className="hidden max-w-md flex-1 items-center gap-2 rounded-xl border border-white/8 bg-white/[0.035] px-3 py-2 text-sm text-slate-500 md:flex"><Search size={16} /><span>Search cases, persons, locations…</span></div>
+        <div className="flex items-center gap-3"><button className="relative grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-slate-300"><Bell size={17} /><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#e5b956]" /></button><div className="hidden border-l border-white/10 pl-3 sm:block"><p className="text-xs font-semibold text-white">SCRB Analyst</p><p className="text-[10px] text-slate-500">Karnataka · Restricted</p></div></div>
       </div>
-    );
-  }
+    </header>
 
-  return (
-    <div className="min-h-screen bg-[#0a0a0a] text-gray-300 p-8">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 border-b border-[#222] pb-6">
-          <div className="flex items-center gap-3">
-            <Terminal className="w-6 h-6 text-white shrink-0" />
-            <h1 className="text-2xl sm:text-3xl font-logo tracking-widest text-gray-200">monomelt</h1>
-          </div>
-          
-          <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
-            <div className="hidden md:flex items-center gap-3 text-sm text-gray-500">
-              <span className="text-gray-400">user:</span>
-              <span>{user?.user_metadata?.user_name || user?.email}</span>
-            </div>
-            <button 
-              onClick={handleSignOut}
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors bg-[#111] hover:bg-[#222] px-4 py-2 rounded-sm border border-[#222] text-sm font-bold"
-            >
-              <LogOut className="w-4 h-4" />
-              EXIT
-            </button>
-          </div>
-        </header>
-        
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Main Action Area */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-[#111] border border-[#222] rounded-sm p-8">
-              
-              <h2 className="text-xl font-bold text-white mb-2">&gt; ingest_repository</h2>
-              <p className="text-gray-500 mb-6 text-sm">Target a GitHub repository for AST parsing and modular extraction.</p>
-              
-              <div className="border border-dashed border-[#444] rounded-sm p-12 text-center hover:bg-[#1a1a1a] hover:border-gray-500 transition-colors cursor-pointer">
-                <FolderGit2 className="w-10 h-10 text-gray-600 mx-auto mb-4" />
-                <h3 className="text-base font-bold text-gray-300">Paste GitHub URL</h3>
-                <p className="text-xs text-gray-600 mt-2">[ STATUS: WAITING_FOR_PHASE_2 ]</p>
-              </div>
-            </div>
-          </div>
+    <div className="mx-auto flex max-w-[1600px] gap-7 px-4 py-6 sm:px-6 lg:px-8">
+      <aside className="hidden w-56 shrink-0 lg:block"><p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[.18em] text-slate-500">Workspace</p><nav className="space-y-1"><Nav label="Overview" icon={Activity} active /><Nav label="Geospatial" icon={MapPinned} /><Nav label="Network analysis" icon={Network} /><Nav label="Predictions" icon={BrainCircuit} /><Nav label="Case ledger" icon={Search} /></nav><div className="mt-8 rounded-2xl border border-[#c6a75b]/15 bg-[#c6a75b]/[.06] p-4"><p className="text-xs font-semibold text-[#e2c979]">Intelligence status</p><p className="mt-2 text-xs leading-5 text-slate-400">All monitored feeds are operating within expected parameters.</p><div className="mt-4 flex items-center gap-2 text-[11px] font-bold text-emerald-200"><span className="h-2 w-2 rounded-full bg-emerald-300" /> SYSTEMS OPERATIONAL</div></div></aside>
 
-          {/* Sidebar / Stats */}
-          <div className="space-y-6">
-            <div className="bg-[#111] border border-[#222] rounded-sm p-6">
-              <div className="flex items-center gap-3 mb-6 text-white">
-                <Activity className="w-4 h-4" />
-                <h3 className="font-bold text-sm tracking-wide">SYSTEM_STATUS</h3>
-              </div>
-              <div className="space-y-4 font-mono text-sm">
-                <div className="flex justify-between items-center border-b border-[#222] pb-2">
-                  <span className="text-gray-500">api-gateway</span>
-                  <span className="text-emerald-500 font-bold">ONLINE</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-[#222] pb-2">
-                  <span className="text-gray-500">ai-service</span>
-                  <span className="text-emerald-500 font-bold">ONLINE</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-[#222] pb-2">
-                  <span className="text-gray-500">neo4j_graph</span>
-                  <span className="text-gray-600 font-bold">OFFLINE</span>
-                </div>
-              </div>
-            </div>
+      <main className="min-w-0 flex-1">
+        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="text-xs font-bold uppercase tracking-[.18em] text-[#d8bb70]">Operational overview</p><h1 className="font-display mt-2 text-2xl font-semibold tracking-[-.035em] text-white sm:text-3xl">Good morning, Analyst.</h1><p className="mt-2 text-sm text-slate-400">A focused view of current signals across Karnataka.</p></div><button className="inline-flex items-center gap-2 self-start rounded-xl border border-white/10 bg-white/[.035] px-3 py-2 text-xs font-semibold text-slate-300 sm:self-auto">Last 30 days <ChevronDown size={14} /></button></div>
+        <section className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Stat label="Cases logged" value="18,642" change="+8.4%" icon={Activity} /><Stat label="Active alerts" value="08" change="2 new" icon={CircleAlert} tone="amber" /><Stat label="Network entities" value="4,891" change="+216 this week" icon={Network} /><Stat label="High-risk zones" value="14" change="Review required" icon={MapPinned} tone="coral" /></section>
 
-            <div className="bg-[#111] border border-[#222] rounded-sm p-6">
-              <h3 className="font-bold text-white mb-4 text-sm tracking-wide">EXECUTION_LOG</h3>
-              <p className="text-xs text-gray-600 font-mono">No active jobs found in queue.</p>
-            </div>
-          </div>
+        <section className="mt-5 grid gap-5 xl:grid-cols-[1.35fr_.85fr]"><div className="rounded-2xl border border-white/8 bg-[#0c211b] p-5 sm:p-6"><PanelHeading title="Crime activity signal" subtitle="Weekly incidents against historical baseline" /><div className="mt-8 flex h-48 items-end gap-2 sm:gap-3">{weeklySignal.map((height, index) => <div key={index} className="group relative flex h-full flex-1 items-end"><div style={{ height: `${height}%` }} className={`w-full rounded-t-md transition group-hover:opacity-85 ${index > 9 ? 'bg-[#d9ba69]' : 'bg-emerald-300/50'}`} /><span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] text-slate-600">{index % 2 === 0 ? `W${index + 1}` : ''}</span></div>)}</div><div className="mt-10 flex items-center gap-5 text-[11px] text-slate-400"><span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-emerald-300/50" /> Observed activity</span><span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-[#d9ba69]" /> Attention threshold</span></div></div>
+          <div className="rounded-2xl border border-white/8 bg-[#0c211b] p-5 sm:p-6"><div className="flex items-center justify-between"><div><p className="font-display text-base font-semibold text-white">Priority signals</p><p className="mt-1 text-xs text-slate-500">Ranked for analyst review</p></div><span className="rounded-full bg-[#e7ba5c]/10 px-2.5 py-1 text-[10px] font-bold text-[#e7ba5c]">08 ACTIVE</span></div><div className="mt-4 divide-y divide-white/7">{alerts.map(([type, title, detail, tone]) => <div key={title} className="flex gap-3 py-4 first:pt-2"><span className={`mt-1 h-2 w-2 shrink-0 rounded-full ${tone === 'amber' ? 'bg-[#e7ba5c]' : tone === 'coral' ? 'bg-[#ef7763]' : 'bg-emerald-300'}`} /><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{type}</p><p className="mt-1 text-sm font-semibold text-slate-200">{title}</p><p className="mt-1 text-xs text-slate-500">{detail}</p></div><ArrowUpRight className="ml-auto shrink-0 text-slate-600" size={16} /></div>)}</div></div></section>
 
-        </div>
-      </div>
+        <section className="mt-5 grid gap-5 lg:grid-cols-2"><div className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#0c211b] p-5 sm:p-6"><div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(105,185,156,.13)_1px,transparent_1px),linear-gradient(90deg,rgba(105,185,156,.13)_1px,transparent_1px)] [background-size:28px_28px]" /><div className="relative flex items-start justify-between"><div><p className="font-display text-base font-semibold text-white">Geospatial watch</p><p className="mt-1 text-xs text-slate-400">District activity concentration</p></div><MapPinned size={19} className="text-[#d8bb70]" /></div><div className="relative mt-6 h-32"><MapDot className="left-[18%] top-[30%] bg-[#ef7763] ring-[#ef7763]/15" /><MapDot className="left-[53%] top-[15%] bg-[#e7ba5c] ring-[#e7ba5c]/15" /><MapDot className="left-[67%] top-[62%] bg-[#ef7763] ring-[#ef7763]/15" /><MapDot className="left-[35%] top-[70%] bg-emerald-300 ring-emerald-300/15" /></div><p className="relative text-xs text-slate-400"><span className="font-semibold text-white">Bengaluru Urban</span> remains the primary watch area this week.</p></div><div className="rounded-2xl border border-white/8 bg-[#0c211b] p-5 sm:p-6"><PanelHeading title="Investigation queue" subtitle="Items needing intelligence review" /><div className="mt-5 space-y-4">{[['Case correlation review', '06 items', 'Today'], ['Unresolved entity matches', '14 items', 'Today'], ['Forecast validation', '03 items', 'Tomorrow']].map(([title, count, due]) => <div key={title} className="flex items-center justify-between"><div><p className="text-sm font-semibold text-slate-200">{title}</p><p className="mt-1 text-xs text-slate-500">{count}</p></div><span className="rounded-lg bg-white/[.045] px-2 py-1 text-[10px] font-semibold text-slate-400">{due}</span></div>)}</div></div></section>
+      </main>
     </div>
-  );
-};
+  </div>
+);
+
+const Nav = ({ label, icon: Icon, active = false }: { label: string; icon: typeof Activity; active?: boolean }) => <button className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${active ? 'bg-emerald-200/10 font-semibold text-emerald-100' : 'text-slate-400 hover:bg-white/[.04] hover:text-white'}`}><Icon size={17} />{label}</button>;
+const PanelHeading = ({ title, subtitle }: { title: string; subtitle: string }) => <div className="flex items-start justify-between"><div><p className="font-display text-base font-semibold text-white">{title}</p><p className="mt-1 text-xs text-slate-500">{subtitle}</p></div><MoreHorizontal size={19} className="text-slate-600" /></div>;
+const MapDot = ({ className }: { className: string }) => <span className={`absolute h-3 w-3 rounded-full ring-8 ${className}`} />;
+const Stat = ({ label, value, change, icon: Icon, tone = 'green' }: { label: string; value: string; change: string; icon: typeof Activity; tone?: 'green' | 'amber' | 'coral' }) => { const colors = tone === 'amber' ? 'bg-[#e7ba5c]/12 text-[#e7ba5c]' : tone === 'coral' ? 'bg-[#ef7763]/12 text-[#ef7763]' : 'bg-emerald-300/10 text-emerald-200'; const text = tone === 'green' ? 'text-emerald-200' : tone === 'amber' ? 'text-[#e7ba5c]' : 'text-[#ef7763]'; return <article className="rounded-2xl border border-white/8 bg-[#0c211b] p-5"><div className="flex items-start justify-between"><span className={`grid h-9 w-9 place-items-center rounded-xl ${colors}`}><Icon size={18} /></span><TrendingUp size={15} className="text-slate-600" /></div><p className="mt-5 text-xs text-slate-400">{label}</p><p className="font-display mt-1 text-2xl font-semibold text-white">{value}</p><p className={`mt-2 text-[11px] font-semibold ${text}`}>{change}</p></article>; };
 
 export default Dashboard;
