@@ -151,7 +151,8 @@ NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_neo4j_password
 NEO4J_DATABASE=neo4j
 
-CHROMA_DATABASE=Datathon
+CHROMA_PATH=./chroma_data
+CHROMA_COLLECTION_NAME=modus_operandi
 
 REDIS_URL=rediss://default:your_password@your-upstash-endpoint:6379
 
