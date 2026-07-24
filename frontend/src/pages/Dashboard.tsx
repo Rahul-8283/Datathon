@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Activity, ArrowUpRight, Bell, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut, Lock } from 'lucide-react';
+import { Activity, ArrowUpRight, Bell, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
 const weeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
@@ -10,28 +9,7 @@ const alerts = [
 ];
 
 const Dashboard = () => {
-  const { user, session, logout } = useAuthStore();
-  const [apiResponse, setApiResponse] = useState<string | null>(null);
-  const [loadingApi, setLoadingApi] = useState(false);
-
-  const testBackendAuth = async () => {
-    setLoadingApi(true);
-    setApiResponse(null);
-    try {
-      const token = session?.access_token;
-      const res = await fetch(`${import.meta.env.VITE_API_DEV_URL || 'http://127.0.0.1:8000'}/api/v1/secure-data`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setApiResponse(JSON.stringify(data, null, 2));
-    } catch (err: any) {
-      setApiResponse(`Backend connection error: ${err.message}`);
-    } finally {
-      setLoadingApi(false);
-    }
-  };
+  const { user, logout } = useAuthStore();
 
   return (
     <div className="min-h-screen bg-[#07110f] text-slate-200">
@@ -106,32 +84,6 @@ const Dashboard = () => {
               Last 30 days <ChevronDown size={14} />
             </button>
           </div>
-
-          {/* Phase 2 Backend Authorization Test Banner */}
-          <div className="mt-6 p-4 rounded-none border border-cyan-500/20 bg-cyan-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-                <Lock size={18} />
-              </div>
-              <div>
-                <p className="text-xs font-bold font-mono text-cyan-300 uppercase tracking-wider">Phase 2 Verification: JWT Authorization</p>
-                <p className="text-xs text-slate-400">Test backend Bearer token verification at <code className="text-cyan-400 font-mono">/api/v1/secure-data</code></p>
-              </div>
-            </div>
-            <button
-              onClick={testBackendAuth}
-              disabled={loadingApi}
-              className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shrink-0"
-            >
-              {loadingApi ? 'Testing API...' : 'Test Backend Auth'}
-            </button>
-          </div>
-
-          {apiResponse && (
-            <div className="mt-3 p-3 bg-slate-900 border border-cyan-500/30 font-mono text-xs text-cyan-300 overflow-x-auto">
-              <pre>{apiResponse}</pre>
-            </div>
-          )}
 
           <section className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <Stat label="Cases logged" value="18,642" change="+8.4%" icon={Activity} />
