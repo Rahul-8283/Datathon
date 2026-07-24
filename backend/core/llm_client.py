@@ -8,11 +8,11 @@ except ImportError:
     from ..llm.schemas import DocumentExtraction
 
 def get_primary_llm(settings: Settings) -> ChatOpenAI:
-    """Initialize primary ChatOpenAI client pointing to OpenRouter Llama 3."""
+    """Initialize primary ChatOpenAI client pointing to OpenRouter Llama 3.3."""
     return ChatOpenAI(
         api_key=settings.openrouter_api_key.get_secret_value() if hasattr(settings.openrouter_api_key, 'get_secret_value') else settings.openrouter_api_key,
         base_url="https://openrouter.ai/api/v1",
-        model="meta-llama/llama-3-70b-instruct",
+        model="meta-llama/llama-3.3-70b-instruct",
         temperature=0.0,
     )
 
@@ -32,4 +32,8 @@ def get_extraction_chain(settings: Settings = None):
     primary_structured = get_primary_llm(settings).with_structured_output(DocumentExtraction)
     fallback_structured = get_fallback_llm(settings).with_structured_output(DocumentExtraction)
     
-    return primary_structured.with_fallbacks([fallback_structured])
+    # Enable fallback handling for all standard Exceptions (including auth / endpoint errors)
+    return primary_structured.with_fallbacks(
+        [fallback_structured], 
+        exceptions_to_handle=(Exception,)
+    )
