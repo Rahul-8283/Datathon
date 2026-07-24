@@ -41,5 +41,8 @@ torch>=2.3.0
 pandas>=2.2.0
 numpy>=1.26.0
 
+# Security & Authentication
+PyJWT[crypto]>=2.8.0
+
 # Supabase Client (For Auth/Storage if needed beyond direct Postgres)
 supabase>=2.5.0

@@ -31,6 +31,14 @@ class Settings(BaseSettings):
     chroma_collection_name: str = Field(
         default="modus_operandi", validation_alias=AliasChoices("CHROMA_COLLECTION_NAME")
     )
+    supabase_url: str = Field(
+        default="https://wyknzfjynbahuhgvehkb.supabase.co",
+        validation_alias=AliasChoices("SUPABASE_URL"),
+    )
+    supabase_jwt_secret: str = Field(
+        default="DATATHON",
+        validation_alias=AliasChoices("SUPABASE_JWT_SECRET"),
+    )
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,

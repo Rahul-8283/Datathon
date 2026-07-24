@@ -80,6 +80,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from typing import Any, Dict
+from fastapi import Depends
+if __package__:
+    from .api.deps import get_current_user
+else:
+    from api.deps import get_current_user
+
 @app.get("/health", tags=["Health"])
 async def health_check():
     """Return the API and persistence readiness state."""
@@ -88,6 +95,24 @@ async def health_check():
         "service": "ksp-crime-intelligence-api",
         "status": "up" if getattr(app.state, "connections_ready", False) else "starting",
         "databases_ready": getattr(app.state, "connections_ready", False),
+    }
+
+@app.get("/api/v1/auth/me", tags=["Auth"])
+async def get_my_user_profile(user: Dict[str, Any] = Depends(get_current_user)):
+    """Return the authenticated user profile information decoded from Supabase JWT."""
+    return {
+        "success": True,
+        "user": user,
+    }
+
+@app.get("/api/v1/secure-data", tags=["Auth"])
+async def get_secure_data(user: Dict[str, Any] = Depends(get_current_user)):
+    """Protected endpoint demonstrating Supabase JWT Bearer token authentication."""
+    return {
+        "success": True,
+        "message": f"Welcome, authenticated officer {user.get('email', 'User')}!",
+        "user_id": user.get("user_id"),
+        "role": user.get("role"),
     }
 
 if __name__ == "__main__":
