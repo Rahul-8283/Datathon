@@ -4,7 +4,7 @@ import { getCases, createCase, deleteCase } from '../services/api';
 import type { CaseResponse } from '../services/api';
 
 const CaseLedger: React.FC = () => {
-  const [cases, setCases] = useState<CaseResponse[]>([]);
+  const [allCases, setAllCases] = useState<CaseResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,7 +12,6 @@ const CaseLedger: React.FC = () => {
   // Pagination
   const [page, setPage] = useState(1);
   const limit = 10;
-  const [hasMore, setHasMore] = useState(true);
 
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,21 +23,13 @@ const CaseLedger: React.FC = () => {
   const [formError, setFormError] = useState<string | null>(null);
   const [formSubmitting, setFormSubmitting] = useState(false);
 
-  const fetchCases = async (targetPage: number) => {
+  const fetchCases = async () => {
     setLoading(true);
     setError(null);
     try {
-      const skip = (targetPage - 1) * limit;
-      const data = await getCases(skip, limit + 1);
-      
-      if (data.length > limit) {
-        setCases(data.slice(0, limit));
-        setHasMore(true);
-      } else {
-        setCases(data);
-        setHasMore(false);
-      }
-      setPage(targetPage);
+      // Load complete dataset for full ledger client search
+      const data = await getCases(0, 1000);
+      setAllCases(data);
     } catch (err: any) {
       console.error('Error fetching cases:', err);
       setError(err.response?.data?.detail || 'Failed to load case records.');
@@ -48,18 +39,38 @@ const CaseLedger: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchCases(1);
+    fetchCases();
   }, []);
+
+  // Filter cases client-side for immediate responsive search experience on full ledger
+  const filteredCases = allCases.filter((c) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      c.fir_number.toLowerCase().includes(query) ||
+      c.district.toLowerCase().includes(query) ||
+      c.status.toLowerCase().includes(query) ||
+      (c.description && c.description.toLowerCase().includes(query))
+    );
+  });
+
+  // Calculate displayed slice and hasMore dynamically on filtered cases
+  const displayedCases = filteredCases.slice((page - 1) * limit, page * limit);
+  const hasMore = filteredCases.length > page * limit;
+
+  // Reset page to 1 whenever search query changes
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
 
   const handlePrevPage = () => {
     if (page > 1) {
-      fetchCases(page - 1);
+      setPage(page - 1);
     }
   };
 
   const handleNextPage = () => {
     if (hasMore) {
-      fetchCases(page + 1);
+      setPage(page + 1);
     }
   };
 
@@ -106,8 +117,10 @@ const CaseLedger: React.FC = () => {
 
       await createCase(payload);
       setIsModalOpen(false);
-      // Reload page 1 to see the new case at the top
-      fetchCases(1);
+      // Reset search query and reload full dataset
+      setSearchQuery('');
+      setPage(1);
+      fetchCases();
     } catch (err: any) {
       console.error('Error creating case:', err);
       setFormError(err.response?.data?.detail || 'Failed to create case record.');
@@ -123,24 +136,15 @@ const CaseLedger: React.FC = () => {
 
     try {
       await deleteCase(caseId);
-      // Refresh current page
-      fetchCases(page);
+      // Refresh full dataset
+      fetchCases();
     } catch (err: any) {
       console.error('Error deleting case:', err);
       alert(err.response?.data?.detail || 'Failed to delete case record.');
     }
   };
 
-  // Filter cases client-side for immediate responsive search experience
-  const filteredCases = cases.filter((c) => {
-    const query = searchQuery.toLowerCase();
-    return (
-      c.fir_number.toLowerCase().includes(query) ||
-      c.district.toLowerCase().includes(query) ||
-      c.status.toLowerCase().includes(query) ||
-      (c.description && c.description.toLowerCase().includes(query))
-    );
-  });
+
 
   const getStatusBadgeClass = (statusStr: string) => {
     switch (statusStr.toLowerCase()) {
@@ -194,7 +198,7 @@ const CaseLedger: React.FC = () => {
           </div>
           
           <button
-            onClick={() => fetchCases(page)}
+            onClick={() => fetchCases()}
             className="flex items-center justify-center gap-2 rounded-none border border-white/8 bg-white/[0.02] px-3.5 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:bg-white/[0.05] transition-all"
             title="Refresh Ledger"
           >
@@ -237,14 +241,14 @@ const CaseLedger: React.FC = () => {
                     <td className="py-4 text-right pr-4"><div className="inline-block h-8 w-8 bg-white/5 rounded-none" /></td>
                   </tr>
                 ))
-              ) : filteredCases.length === 0 ? (
+              ) : displayedCases.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-slate-500">
                     No case records found matching the query.
                   </td>
                 </tr>
               ) : (
-                filteredCases.map((c) => (
+                displayedCases.map((c) => (
                   <tr key={c.id} className="hover:bg-white/[0.015] transition-all">
                     <td className="py-4 pl-4 font-mono font-bold text-white">{c.fir_number}</td>
                     <td className="py-4 text-xs text-slate-400">
