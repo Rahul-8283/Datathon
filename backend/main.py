@@ -41,18 +41,48 @@ async def lifespan(app: FastAPI):
         redis_client = Redis.from_url(settings.redis_url)
         chroma = ChromaDatabase(settings.chroma_path, settings.chroma_collection_name)
 
-        await run_in_threadpool(postgres.verify_connectivity)
-        await run_in_threadpool(neo4j.verify_connectivity)
-        await run_in_threadpool(redis_client.ping)
-        await run_in_threadpool(chroma.verify_connectivity)
+        db_statuses = {}
+
+        try:
+            await run_in_threadpool(postgres.verify_connectivity)
+            db_statuses["postgres"] = "connected"
+            logger.info("PostgreSQL connected successfully.")
+        except Exception as e:
+            db_statuses["postgres"] = f"error: {e}"
+            logger.warning(f"PostgreSQL connection warning: {e}")
+
+        try:
+            await run_in_threadpool(neo4j.verify_connectivity)
+            db_statuses["neo4j"] = "connected"
+            logger.info("Neo4j connected successfully.")
+        except Exception as e:
+            db_statuses["neo4j"] = f"error: {e}"
+            logger.warning(f"Neo4j connection warning: {e}")
+
+        try:
+            await run_in_threadpool(redis_client.ping)
+            db_statuses["redis"] = "connected"
+            logger.info("Redis connected successfully.")
+        except Exception as e:
+            db_statuses["redis"] = f"error: {e}"
+            logger.warning(f"Redis connection warning: {e}")
+
+        try:
+            await run_in_threadpool(chroma.verify_connectivity)
+            db_statuses["chroma"] = "connected"
+            logger.info("ChromaDB connected successfully.")
+        except Exception as e:
+            db_statuses["chroma"] = f"error: {e}"
+            logger.warning(f"ChromaDB connection warning: {e}")
 
         app.state.settings = settings
         app.state.postgres = postgres
         app.state.neo4j = neo4j
         app.state.redis = redis_client
         app.state.chroma = chroma
+        app.state.db_statuses = db_statuses
         app.state.connections_ready = True
-        logger.info("All 4 databases connected successfully.")
+        logger.info("Server startup completed. DB statuses: %s", db_statuses)
         yield
     finally:
         app.state.connections_ready = False
