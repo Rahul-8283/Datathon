@@ -12,15 +12,15 @@ def get_primary_llm(settings: Settings) -> ChatOpenAI:
     return ChatOpenAI(
         api_key=settings.openrouter_api_key.get_secret_value() if hasattr(settings.openrouter_api_key, 'get_secret_value') else settings.openrouter_api_key,
         base_url="https://openrouter.ai/api/v1",
-        model="meta-llama/llama-3.3-70b-instruct",
+        model="meta-llama/llama-3-33-70b-instruct" if "free" in settings.openrouter_api_key else "meta-llama/llama-3.3-70b-instruct",
         temperature=0.0,
     )
 
 def get_fallback_llm(settings: Settings) -> ChatGoogleGenerativeAI:
-    """Initialize fallback ChatGoogleGenerativeAI client pointing to Gemini 1.5 Flash."""
+    """Initialize fallback ChatGoogleGenerativeAI client pointing to Gemini 2.5 Flash."""
     return ChatGoogleGenerativeAI(
         google_api_key=settings.gemini_api_key.get_secret_value() if hasattr(settings.gemini_api_key, 'get_secret_value') else settings.gemini_api_key,
-        model="gemini-1.5-flash",
+        model="gemini-2.5-flash",
         temperature=0.0,
     )
 
