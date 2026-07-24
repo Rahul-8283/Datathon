@@ -9,6 +9,20 @@ This platform transforms static, siloed Excel sheets and manual records into a s
 
 </div>
 
+
+## 🚦 Implementation Status & Roadmap
+
+- [x] **Phase 1: Database Connections & ORM Setup** — Polyglot persistence connections established (PostgreSQL/Supabase, Neo4j Aura, ChromaDB, Upstash Redis) with FastAPI lifespan lifecycle management.
+- [x] **Phase 2: Authentication & User Management** — Security perimeter established with Supabase Auth, JWT verification dependencies, Zustand session store, protected React routes, and officer login/registration portal.
+- [ ] **Phase 3: Case Ledger & Core Data Models** — Database schemas, ORM models, and CRUD operations for FIR cases, suspects, and entities.
+- [ ] **Phase 4: Multi-Agent Ingestion Pipeline (LangGraph)** — Automated entity extraction, linkage, and geocoding from unstructured case diaries.
+- [ ] **Phase 5: Graph Link Analysis & Network Graph** — PageRank, shortest-path calculation, and interactive criminal network visualization.
+- [ ] **Phase 6: Geospatial Analytics & Spatiotemporal Hotspots** — District drill-downs, dynamic time-slider heatmaps, and crime spike warnings.
+- [ ] **Phase 7: AI Predictive Forecasting & Anomaly Detection** — Time-series projections (Prophet) and isolation forest outlier detection.
+- [ ] **Phase 8: Search & Semantic MO Discovery** — Vector similarity search across modus operandi notes.
+- [ ] **Phase 9: Real-time Incident Ticker & Alerts** — Websocket notification stream for priority intelligence events.
+- [ ] **Phase 10: Production Hardening, Audit & Deployment** — Containerization, security audit logs, and cloud deployment.
+
 ---
 
 ## 🏛️ Architecture Overview & How We Solve It
