@@ -6,6 +6,12 @@ from sqlalchemy import select
 from models.case import Case
 from schemas.case import CaseCreate
 
+from sqlalchemy.exc import IntegrityError
+
+class FIRConflictError(Exception):
+    """Raised when a case creation violates the unique FIR constraint."""
+    pass
+
 def get_case(db: Session, case_id: uuid.UUID) -> Optional[Case]:
     """Retrieve a single case by its UUID primary key."""
     return db.scalar(select(Case).where(Case.id == case_id))
@@ -28,8 +34,15 @@ def create_case(db: Session, case_in: CaseCreate) -> Case:
         description=case_in.description,
     )
     db.add(db_obj)
-    db.commit()
-    db.refresh(db_obj)
+    try:
+        db.commit()
+        db.refresh(db_obj)
+    except IntegrityError as e:
+        db.rollback()
+        err_msg = str(e.orig).lower()
+        if "fir_number" in err_msg or "cases_fir_number" in err_msg:
+            raise FIRConflictError(f"FIR number '{case_in.fir_number}' already exists.") from e
+        raise e
     return db_obj
 
 def delete_case(db: Session, case_id: uuid.UUID) -> Optional[Case]:

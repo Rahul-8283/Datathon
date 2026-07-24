@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any
 import uuid
@@ -7,17 +7,19 @@ try:
     from api.deps import get_db, get_current_user
     from schemas.case import CaseCreate, CaseResponse
     from crud import crud_case
+    from crud.crud_case import FIRConflictError
 except ImportError:
     from ...api.deps import get_db, get_current_user
     from ...schemas.case import CaseCreate, CaseResponse
     from ...crud import crud_case
+    from ...crud.crud_case import FIRConflictError
 
 router = APIRouter(prefix="/cases", tags=["Cases"])
 
 @router.get("/", response_model=List[CaseResponse])
 def read_cases(
-    skip: int = 0,
-    limit: int = 100,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=500),
     db: Session = Depends(get_db),
     current_user: Dict[str, Any] = Depends(get_current_user),
 ):
@@ -34,10 +36,16 @@ def create_new_case(
     existing_case = crud_case.get_case_by_fir(db, fir_number=case_in.fir_number)
     if existing_case:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=f"A case with FIR number {case_in.fir_number} already exists.",
         )
-    return crud_case.create_case(db, case_in=case_in)
+    try:
+        return crud_case.create_case(db, case_in=case_in)
+    except FIRConflictError as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(e),
+        )
 
 @router.get("/{case_id}", response_model=CaseResponse)
 def read_case(

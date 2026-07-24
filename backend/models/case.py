@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import String, Text, DateTime
+from sqlalchemy import String, Text, DateTime, CheckConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -18,7 +18,12 @@ class Case(Base):
     fir_number: Mapped[str] = mapped_column(String(100), unique=True, nullable=False, index=True)
     date_reported: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     district: Mapped[str] = mapped_column(String(150), nullable=False)
-    status: Mapped[str] = mapped_column(String(50), default="Open", nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(50), 
+        CheckConstraint("status IN ('Open', 'Closed', 'Cold')", name="chk_cases_status"),
+        default="Open", 
+        nullable=False
+    )
     description: Mapped[str] = mapped_column(Text, nullable=True)
     
     created_at: Mapped[datetime] = mapped_column(

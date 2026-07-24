@@ -59,6 +59,6 @@ def decode_supabase_token(token: str, jwt_secret: str) -> Dict[str, Any]:
         logger.error(f"JWT validation error: {err}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid authentication credentials: {err}",
+            detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
