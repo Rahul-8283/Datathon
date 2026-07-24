@@ -21,6 +21,9 @@ __pycache__/
 # Logs
 *.log
 
+# Local persistent vector database files
+chroma_data/
+
 # Distribution / packaging
 dist/
 build/
