@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
-import { ShieldAlert } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,14 +13,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-[#07110f] text-slate-100 flex flex-col items-center justify-center space-y-4">
         <div className="relative flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin"></div>
-          <ShieldAlert className="w-6 h-6 text-cyan-400 absolute animate-pulse" />
+          <div className="w-14 h-14 border-2 border-[#c6a75b]/20 border-t-[#c6a75b] rounded-none animate-spin" />
+          <ShieldCheck className="w-6 h-6 text-[#c6a75b] absolute" />
         </div>
         <div className="text-center space-y-1">
-          <p className="text-sm font-mono uppercase tracking-widest text-cyan-400">Authenticating Officer Portal</p>
-          <p className="text-xs text-slate-400">Verifying security token and permissions...</p>
+          <p className="text-xs font-mono uppercase tracking-[.2em] text-[#d8bb70]">Authenticating Officer Portal</p>
+          <p className="text-xs text-slate-400 font-mono">Verifying security token and permissions...</p>
         </div>
       </div>
     );

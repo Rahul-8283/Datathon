@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
 import { useAuthStore } from '../store/authStore';
-import { Shield, Lock, Mail, AlertCircle, ArrowRight, CheckCircle2, KeyRound } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, AlertCircle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const Login: React.FC = () => {
     setSuccessMessage(null);
 
     if (!email || !password) {
-      setErrorMessage('Please enter both official email and password.');
+      setErrorMessage('Please enter both official email address and security password.');
       setLoading(false);
       return;
     }
@@ -43,7 +43,7 @@ export const Login: React.FC = () => {
           setSession(data.session);
           navigate(from, { replace: true });
         } else {
-          setSuccessMessage('Officer registration initiated! Please check your email to verify or log in.');
+          setSuccessMessage('Officer profile created! A confirmation email has been dispatched. Please verify to sign in.');
         }
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -67,48 +67,55 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950 relative overflow-hidden">
-      {/* Background Glow Elements */}
-      <div className="absolute top-0 -left-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 -right-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-[#07110f] text-slate-200 flex flex-col justify-between selection:bg-[#c6a75b]/35 relative overflow-hidden font-sans">
+      {/* Background Radial Glow */}
+      <div className="absolute inset-x-0 top-0 -z-10 h-[680px] bg-[radial-gradient(circle_at_72%_18%,rgba(40,137,113,0.25),transparent_27%),radial-gradient(circle_at_15%_12%,rgba(198,167,91,0.12),transparent_22%)]" />
 
-      {/* Header Bar */}
-      <header className="px-6 py-4 border-b border-slate-800/80 bg-slate-900/40 backdrop-blur-md flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-            <Shield className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-base font-bold tracking-tight text-white">KSP Intelligence Portal</h1>
-            <p className="text-xs text-slate-400 font-mono">Karnataka State Police Analytical Unit</p>
-          </div>
-        </div>
-        <div className="hidden sm:flex items-center space-x-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-          <span className="text-xs font-mono text-slate-400">Secure Network Online</span>
+      {/* Full-Width Navbar matching Landing & Dashboard */}
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07110f]/90 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <span className="grid h-9 w-9 place-items-center rounded-none bg-[#c6a75b] text-[#10231d]">
+              <ShieldCheck size={19} />
+            </span>
+            <div>
+              <span className="font-display block text-lg font-bold tracking-tight text-white">KSP Intelligence</span>
+              <p className="text-[10px] font-bold uppercase tracking-[.16em] text-emerald-100/45">State Crime Records Bureau</p>
+            </div>
+          </Link>
+          <Link
+            to="/"
+            className="text-xs font-bold uppercase tracking-wider text-[#c6a75b] hover:text-[#e0c477] transition-colors"
+          >
+            ← Return to Overview
+          </Link>
         </div>
       </header>
 
-      {/* Main Authentication Card */}
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
-        <div className="w-full max-full sm:max-w-md bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6 relative z-10">
+      {/* Main Authentication Section */}
+      <main className="flex-1 flex items-center justify-center p-5 sm:p-8">
+        <div className="w-full max-w-md bg-[#0c211b]/95 border border-white/10 rounded-none p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-black/50 space-y-6 relative">
           
-          <div className="text-center space-y-2">
-            <div className="inline-flex p-3 rounded-xl bg-slate-800/80 border border-slate-700/50 mb-2">
-              <KeyRound className="w-6 h-6 text-cyan-400" />
+          {/* Decorative Grid Accent */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none [background-image:linear-gradient(rgba(120,200,168,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(120,200,168,.12)_1px,transparent_1px)] [background-size:28px_28px]" />
+
+          <div className="relative z-10 text-center space-y-2">
+            <div className="inline-flex items-center gap-2 rounded-none border border-emerald-200/15 bg-emerald-300/[0.06] px-3 py-1.5 text-xs font-semibold text-emerald-100/80 mb-1">
+              <Sparkles size={13} className="text-[#d8bb70]" />
+              Restricted Officer Portal
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-white">
-              {isSignUp ? 'Officer Registration' : 'Officer Sign In'}
+            <h2 className="font-display text-2xl font-semibold tracking-[-0.035em] text-white sm:text-3xl">
+              {isSignUp ? 'Officer Registration' : 'Command Sign In'}
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs leading-5 text-slate-400">
               {isSignUp
-                ? 'Create a secure account to access intelligence databases'
-                : 'Enter your credentials to access the analytical dashboard'}
+                ? 'Register your official credentials to access state intelligence feeds'
+                : 'Authenticate your session to enter the analytical command workspace'}
             </p>
           </div>
 
-          {/* Mode Switcher */}
-          <div className="grid grid-cols-2 p-1 bg-slate-950/80 rounded-xl border border-slate-800 text-xs font-medium">
+          {/* Mode Switcher Tabs */}
+          <div className="relative z-10 grid grid-cols-2 p-1 bg-[#102a23] border border-white/10 rounded-none text-xs font-bold uppercase tracking-wider">
             <button
               type="button"
               onClick={() => {
@@ -116,10 +123,10 @@ export const Login: React.FC = () => {
                 setErrorMessage(null);
                 setSuccessMessage(null);
               }}
-              className={`py-2 rounded-lg transition-all ${
+              className={`py-2.5 transition-all cursor-pointer ${
                 !isSignUp
-                  ? 'bg-slate-800 text-white shadow-sm font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               Sign In
@@ -131,35 +138,35 @@ export const Login: React.FC = () => {
                 setErrorMessage(null);
                 setSuccessMessage(null);
               }}
-              className={`py-2 rounded-lg transition-all ${
+              className={`py-2.5 transition-all cursor-pointer ${
                 isSignUp
-                  ? 'bg-slate-800 text-white shadow-sm font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
-              Register Account
+              Register
             </button>
           </div>
 
-          {/* Alerts */}
+          {/* Alert Messages */}
           {errorMessage && (
-            <div className="p-3 bg-red-950/50 border border-red-800/60 rounded-xl flex items-start space-x-3 text-red-200 text-xs animate-shake">
+            <div className="relative z-10 p-3.5 bg-red-950/70 border border-red-500/30 rounded-none flex items-start space-x-3 text-red-200 text-xs">
               <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span>{errorMessage}</span>
+              <span className="leading-relaxed">{errorMessage}</span>
             </div>
           )}
 
           {successMessage && (
-            <div className="p-3 bg-emerald-950/50 border border-emerald-800/60 rounded-xl flex items-start space-x-3 text-emerald-200 text-xs">
+            <div className="relative z-10 p-3.5 bg-emerald-950/70 border border-emerald-500/30 rounded-none flex items-start space-x-3 text-emerald-200 text-xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-              <span>{successMessage}</span>
+              <span className="leading-relaxed">{successMessage}</span>
             </div>
           )}
 
           {/* Auth Form */}
-          <form onSubmit={handleAuth} className="space-y-4">
+          <form onSubmit={handleAuth} className="relative z-10 space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              <label className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400 font-mono">
                 Official Email Address
               </label>
               <div className="relative">
@@ -169,15 +176,15 @@ export const Login: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="officer@ksp.gov.in"
-                  className="w-full bg-slate-950/70 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-3 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
                   required
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                Password
+              <label className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400 font-mono">
+                Security Password
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
@@ -186,7 +193,7 @@ export const Login: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-slate-950/70 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-3 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
                   required
                 />
               </div>
@@ -195,28 +202,28 @@ export const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-sm font-semibold shadow-lg shadow-cyan-600/25 flex items-center justify-center space-x-2 disabled:opacity-50 transition-all cursor-pointer mt-2"
+              className="w-full py-3.5 px-5 bg-[#c6a75b] hover:bg-[#e0c477] text-[#11231e] font-bold text-xs uppercase tracking-[.16em] rounded-none transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-lg shadow-[#c6a75b]/20 mt-3"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-[#11231e]/30 border-t-[#11231e] rounded-full animate-spin" />
               ) : (
                 <>
                   <span>{isSignUp ? 'Create Officer Profile' : 'Authenticate & Enter'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight size={16} />
                 </>
               )}
             </button>
           </form>
 
-          <div className="pt-2 text-center text-xs text-slate-500 border-t border-slate-800/60">
-            <span>Restricted System • Official Law Enforcement Access Only</span>
+          <div className="relative z-10 pt-2 text-center text-[10px] uppercase tracking-widest text-slate-500 border-t border-white/8 font-mono">
+            Restricted System · Karnataka Police Security Protocol
           </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="py-4 text-center text-xs text-slate-600 font-mono">
-        KSP Crime Intelligence & Analytical Platform © 2026
+      {/* Footer matching Landing & Dashboard */}
+      <footer className="border-t border-white/8 px-5 py-6 text-center text-xs text-slate-500 font-mono">
+        © 2026 Karnataka State Police · Strategic Crime Intelligence Hub
       </footer>
     </div>
   );
