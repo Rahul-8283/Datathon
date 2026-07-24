@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search as SearchIcon, Plus, ChevronLeft, ChevronRight, Trash2, Calendar, MapPin, Tag, FileText, AlertCircle, RefreshCw } from 'lucide-react';
-import { getCases, createCase, deleteCase, CaseResponse } from '../services/api';
+import { getCases, createCase, deleteCase } from '../services/api';
+import type { CaseResponse } from '../services/api';
 
 const CaseLedger: React.FC = () => {
   const [cases, setCases] = useState<CaseResponse[]>([]);

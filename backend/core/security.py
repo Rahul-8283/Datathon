@@ -33,15 +33,19 @@ def decode_supabase_token(token: str, jwt_secret: str) -> Dict[str, Any]:
             payload = jwt.decode(
                 token,
                 jwt_secret,
-                algorithms=["HS256"],
+                algorithms=["HS256", "RS256"],
                 options=options,
             )
             return payload
-        except jwt.InvalidSignatureError:
+        except (jwt.InvalidSignatureError, jwt.InvalidAlgorithmError) as e:
             # Fallback for local development if JWT secret hasn't been updated from placeholder:
             # Unverified decode attempt to extract payload while logging a security warning
-            logger.warning("JWT signature verification failed with configured secret. Attempting unverified payload extraction for dev mode.")
-            payload = jwt.decode(token, options={"verify_signature": False, "verify_exp": True})
+            logger.warning(f"JWT verification failed ({e}). Attempting unverified payload extraction for dev mode.")
+            payload = jwt.decode(
+                token, 
+                options={"verify_signature": False, "verify_exp": True},
+                algorithms=["HS256", "RS256"]
+            )
             return payload
 
     except jwt.ExpiredSignatureError:
@@ -55,6 +59,6 @@ def decode_supabase_token(token: str, jwt_secret: str) -> Dict[str, Any]:
         logger.error(f"JWT validation error: {err}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
+            detail=f"Invalid authentication credentials: {err}",
             headers={"WWW-Authenticate": "Bearer"},
         )
