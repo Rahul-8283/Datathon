@@ -2,7 +2,7 @@
 
 import logging
 from neo4j import Driver, GraphDatabase
-from neo4j.exceptions import BoltSecurityError, ServiceUnavailable
+from neo4j.exceptions import ServiceUnavailable
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class Neo4jDatabase:
         """Confirm the driver can authenticate and execute a Cypher query."""
         try:
             self._driver.verify_connectivity()
-        except (BoltSecurityError, ServiceUnavailable, Exception) as err:
+        except (ServiceUnavailable, Exception) as err:
             if "neo4j+s://" in self._uri:
                 logger.warning(
                     "Strict SSL verification failed for Neo4j (%s). Retrying with self-signed certificate fallback (neo4j+ssc://)...",
