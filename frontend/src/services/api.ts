@@ -1,0 +1,56 @@
+import axios from 'axios';
+import { useAuthStore } from '../store/authStore';
+
+const isDev = import.meta.env.VITE_MODE === 'development';
+const baseURL = (isDev ? import.meta.env.VITE_API_DEV_URL : import.meta.env.VITE_API_PRO_URL) || 'http://127.0.0.1:8000';
+
+export const api = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+api.interceptors.request.use(
+  (config) => {
+    const session = useAuthStore.getState().session;
+    if (session?.access_token) {
+      config.headers.Authorization = `Bearer ${session.access_token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export interface CaseBase {
+  fir_number: string;
+  date_reported: string; // ISO String
+  district: string;
+  status: string;
+  description?: string;
+}
+
+export interface CaseResponse extends CaseBase {
+  id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export const getCases = async (skip = 0, limit = 100): Promise<CaseResponse[]> => {
+  const response = await api.get<CaseResponse[]>('/api/v1/cases/', {
+    params: { skip, limit },
+  });
+  return response.data;
+};
+
+export const createCase = async (caseData: CaseBase): Promise<CaseResponse> => {
+  const response = await api.post<CaseResponse>('/api/v1/cases/', caseData);
+  return response.data;
+};
+
+export const deleteCase = async (caseId: string): Promise<CaseResponse> => {
+  const response = await api.delete<CaseResponse>(`/api/v1/cases/${caseId}`);
+  return response.data;
+};

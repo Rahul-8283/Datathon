@@ -60,3 +60,20 @@ async def get_current_user(
         "app_metadata": payload.get("app_metadata", {}),
         "user_metadata": payload.get("user_metadata", {}),
     }
+
+from collections.abc import Generator
+from sqlalchemy.orm import Session
+
+def get_db(request: Request) -> Generator[Session, None, None]:
+    """Dependency to retrieve a database session for a single request, then close it."""
+    postgres = getattr(request.app.state, "postgres", None)
+    if postgres is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Database connection is not initialized",
+        )
+    db = postgres.SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
