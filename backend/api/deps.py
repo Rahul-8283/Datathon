@@ -4,12 +4,12 @@ from typing import Any, Dict
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-if __package__:
-    from ..core.config import Settings
-    from ..core.security import decode_supabase_token
-else:
+try:
     from core.config import Settings
     from core.security import decode_supabase_token
+except ImportError:
+    from ..core.config import Settings
+    from ..core.security import decode_supabase_token
 
 security = HTTPBearer(auto_error=True)
 
