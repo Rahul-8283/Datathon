@@ -13,6 +13,7 @@ python-dotenv>=1.0.1
 neo4j>=5.21.0
 SQLAlchemy>=2.0.31
 psycopg2-binary>=2.9.9
+alembic>=1.13.0
 
 # AI & LLM Integration
 google-generativeai>=0.7.1
