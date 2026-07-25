@@ -113,3 +113,22 @@ export const getNetworkGraph = async (): Promise<GraphData> => {
   const response = await api.get('/api/v1/graph/network');
   return response.data;
 };
+
+export const runAnomalyDetection = async (): Promise<any> => {
+  const response = await api.post('/api/v1/ml/anomalies');
+  return response.data;
+};
+
+// Stats Interfaces
+export interface OverviewStats {
+  cases_logged: number;
+  network_entities: number;
+  active_alerts: number;
+  high_risk_zones: number;
+  weekly_signal: number[];
+}
+
+export const getOverviewStats = async (): Promise<OverviewStats> => {
+  const response = await api.get('/api/v1/stats/overview');
+  return response.data;
+};

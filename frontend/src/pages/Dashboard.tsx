@@ -1,11 +1,14 @@
-import { Activity, ArrowUpRight, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut, FileSearch } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Activity, ArrowUpRight, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut, FileSearch, Loader2 } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import CaseLedger from './CaseLedger';
 import SemanticSearch from './SemanticSearch';
 import NetworkAnalysis from './NetworkAnalysis';
+import { getOverviewStats, type OverviewStats } from '../services/api';
 
-const weeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
+// Fallback arrays for charts/alerts
+const fallbackWeeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
 const alerts = [
   ['Priority', 'Property crime activity elevated', 'Bengaluru Urban · 18% above baseline', 'amber'],
   ['Network', 'New association pattern detected', 'Mysuru · 6 linked case entities', 'emerald'],
@@ -85,6 +88,22 @@ const Dashboard = () => {
 
 const OverviewTab = () => {
   const { user } = useAuthStore();
+  const [stats, setStats] = useState<OverviewStats | null>(null);
+
+  useEffect(() => {
+    getOverviewStats().then(setStats).catch(console.error);
+  }, []);
+
+  if (!stats) {
+    return (
+      <div className="flex h-full min-h-[400px] items-center justify-center">
+        <Loader2 className="animate-spin text-[#d8bb70]" size={42} />
+      </div>
+    );
+  }
+
+  const weeklySignal = stats.weekly_signal || fallbackWeeklySignal;
+
   return (
     <>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
@@ -101,10 +120,10 @@ const OverviewTab = () => {
       </div>
 
       <section className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Stat label="Cases logged" value="18,642" change="+8.4%" icon={Activity} />
-        <Stat label="Active alerts" value="08" change="2 new" icon={CircleAlert} tone="amber" />
-        <Stat label="Network entities" value="4,891" change="+216 this week" icon={Network} />
-        <Stat label="High-risk zones" value="14" change="Review required" icon={MapPinned} tone="coral" />
+        <Stat label="Cases logged" value={stats.cases_logged.toLocaleString()} change="+8.4%" icon={Activity} />
+        <Stat label="Active alerts" value={stats.active_alerts.toString().padStart(2, '0')} change="2 new" icon={CircleAlert} tone="amber" />
+        <Stat label="Network entities" value={stats.network_entities.toLocaleString()} change="Graph updated" icon={Network} />
+        <Stat label="High-risk zones" value={stats.high_risk_zones.toString()} change="Review required" icon={MapPinned} tone="coral" />
       </section>
 
       <section className="mt-5 grid gap-5 xl:grid-cols-[1.35fr_.85fr]">

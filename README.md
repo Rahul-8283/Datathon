@@ -60,7 +60,7 @@ graph TD
   - Nodes: `Suspect`, `Victim`, `Location`, `Vehicle`, `Phone`, `Case`.
   - Edges: `CO_CONSPIRATOR_WITH`, `COMMUNICATED_WITH`, `SEEN_AT`, `VICTIM_OF`, `INVOLVED_IN`.
   - **Network Calculations:** We run PageRank and Centrality algorithms to isolate ring-leaders, and Shortest-Path algorithms to display the exact linkage path between any two suspects in seconds.
-- **Pinecone Local:** Modus Operandi descriptions are vectorized (via OpenRouter/Gemini Embeddings) and stored in Pinecone to query similar cases semantically.
+- **ChromaDB Local:** Modus Operandi descriptions are vectorized (via OpenRouter/Gemini Embeddings) and stored in ChromaDB to query similar cases semantically.
 
 ### 3. Geospatial & Spatiotemporal Visualization (React, Tailwind CSS & Leaflet)
 - **District-Level Drill-down:** A custom interactive choropleth map styled with Tailwind CSS overlays Karnataka's districts. Clicking on a district drills down into sub-stations and local case lists.
@@ -91,7 +91,7 @@ graph TD
 | | **Hugging Face (all-MiniLM)** | High-speed semantic text embeddings for Modus Operandi vectorization. |
 | **Database** | **PostgreSQL (Supabase)** | Core system logs, user schemas, and tabular crime files. |
 | | **Neo4j Aura** | Graph database for suspect networks and link analysis. |
-| | **Pinecone (Local)** | Semantic search vector database for MO notes. |
+| | **ChromaDB (Local)** | Semantic search vector database for MO notes. |
 | **Auth** | **Supabase Auth / Google OAuth** | Secure role-based dashboard access control. |
 | **AI/ML** | **Prophet** | Time-series forecasting for predicting crime trends. |
 | | **scikit-learn / PyTorch** | Anomaly detection and behavioral clustering. |
@@ -106,7 +106,7 @@ Datathon/
 ├── backend/
 │   ├── api/             # API Router endpoints (auth, crimes, graph, prediction)
 │   ├── core/            # System config, security, environment configurations
-│   ├── db/              # Postgres (SQLAlchemy), Neo4j drivers, Pinecone connections
+│   ├── db/              # Postgres (SQLAlchemy), Neo4j drivers, ChromaDB connections
 │   ├── llm/             # LangGraph definitions, agent prompts, and models
 │   ├── models/          # Pydantic schemas & SQLAlchemy models
 │   ├── services/        # ML Forecasting, Anomaly calculations, and ETL processing
