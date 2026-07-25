@@ -220,6 +220,14 @@ VITE_SUPABASE_ANON_KEY=your-public-anon-key
    ```bash
    uvicorn main:app --reload
    ```
+6. In a separate terminal, start the Celery background worker (ensure the virtual environment is activated):
+   ```bash
+   # On Windows:
+   celery -A core.celery_app worker --loglevel=info --pool=solo
+   
+   # On Mac/Linux:
+   celery -A core.celery_app worker --loglevel=info
+   ```
 
 ### 2. Setting up the Frontend
 1. Navigate to the frontend folder:

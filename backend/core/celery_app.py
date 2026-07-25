@@ -8,11 +8,15 @@ except ImportError:
 
 settings = Settings()
 
+redis_url = settings.redis_url
+if redis_url and redis_url.startswith("rediss://") and "ssl_cert_reqs" not in redis_url:
+    redis_url += "?ssl_cert_reqs=CERT_NONE" if "?" not in redis_url else "&ssl_cert_reqs=CERT_NONE"
+
 # Create Celery instance
 celery_app = Celery(
     "datathon_worker",
-    broker=settings.redis_url,
-    backend=settings.redis_url,
+    broker=redis_url,
+    backend=redis_url,
     include=["worker.tasks"]
 )
 
