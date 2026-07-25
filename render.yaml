@@ -1,0 +1,11 @@
+services:
+  # The combined FastAPI Web Server + Celery Background Worker
+  - type: web
+    name: datathon-ksp-backend
+    env: python
+    buildCommand: "cd backend && pip install -r requirements.txt"
+    # We use '&' to run Celery in the background, and then start uvicorn in the foreground
+    startCommand: "cd backend && celery -A core.celery_app worker --loglevel=info & uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: REDIS_URL
+        sync: false
