@@ -5,6 +5,7 @@ import json
 
 try:
     from core.llm_client import get_extraction_chain, get_primary_llm
+    from core.config import Settings
     from llm.prompts import EXTRACTOR_SYSTEM_PROMPT, LINKER_SYSTEM_PROMPT
     from llm.schemas import DocumentExtraction
     from services.agent.state import AgentState
@@ -13,6 +14,7 @@ except ImportError:
     import os
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from core.llm_client import get_extraction_chain, get_primary_llm
+    from core.config import Settings
     from llm.prompts import EXTRACTOR_SYSTEM_PROMPT, LINKER_SYSTEM_PROMPT
     from llm.schemas import DocumentExtraction
     from services.agent.state import AgentState
@@ -49,7 +51,8 @@ def resolution_node(state: AgentState) -> Dict[str, Any]:
     if not extracted_data:
         return {"errors": state.get("errors", []) + ["No extracted_data available for resolution."]}
         
-    llm = get_primary_llm(None) # Passing None will use default Settings inside if configured properly or we can handle it
+    settings = Settings()
+    llm = get_primary_llm(settings)
     
     # We will pass the extracted JSON string to the LLM to resolve duplicates
     # and expect it to output a resolved DocumentExtraction.
