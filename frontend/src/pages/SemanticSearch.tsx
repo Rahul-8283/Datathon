@@ -28,10 +28,10 @@ const SemanticSearch = () => {
   };
 
   const getMatchScore = (distance: number) => {
-    // Distance usually between 0 (perfect match) and ~2
-    // We'll map it to a pseudo-percentage where lower distance = higher match
-    const matchPercentage = Math.max(0, Math.min(100, (1 - distance) * 100));
-    return matchPercentage.toFixed(1) + '% Match';
+    // ChromaDB L2 distance is typically between 0 and 2
+    // Convert to percentage: distance 0 -> 100%, distance 2 -> 0%
+    const matchPercentage = Math.max(0, Math.min(100, (1 - (distance / 2)) * 100));
+    return matchPercentage.toFixed(1) + '% MATCH';
   };
 
   const getStatusBadgeClass = (distance: number) => {
