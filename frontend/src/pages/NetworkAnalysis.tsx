@@ -9,7 +9,7 @@ const NetworkAnalysis = () => {
   const [error, setError] = useState<string | null>(null);
   
   // To control the graph camera
-  const fgRef = useRef<ForceGraphMethods | null>(null);
+  const fgRef = useRef<ForceGraphMethods | undefined>(undefined);
 
   const fetchData = async () => {
     setIsLoading(true);
