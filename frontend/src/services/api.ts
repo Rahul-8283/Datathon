@@ -71,3 +71,21 @@ export const checkTaskStatus = async (taskId: string): Promise<{ task_id: string
   const response = await api.get(`/api/v1/ingest/status/${taskId}`);
   return response.data;
 };
+// Search Interfaces
+export interface SearchResult {
+  id: string;
+  document: string;
+  metadata: {
+    filename?: string;
+    content_type?: string;
+    [key: string]: any;
+  };
+  distance: number;
+}
+
+export const searchModusOperandi = async (query: string, limit: number = 5): Promise<SearchResult[]> => {
+  const response = await api.get('/api/v1/search/mo', {
+    params: { query, limit },
+  });
+  return response.data;
+};

@@ -1,7 +1,8 @@
-import { Activity, ArrowUpRight, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut } from 'lucide-react';
+import { Activity, ArrowUpRight, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut, FileSearch } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import CaseLedger from './CaseLedger';
+import SemanticSearch from './SemanticSearch';
 
 const weeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
 const alerts = [
@@ -54,6 +55,7 @@ const Dashboard = () => {
             <Nav label="Geospatial" icon={MapPinned} to="/dashboard/geospatial" active={currentPath === '/dashboard/geospatial'} />
             <Nav label="Network analysis" icon={Network} to="/dashboard/network" active={currentPath === '/dashboard/network'} />
             <Nav label="Predictions" icon={BrainCircuit} to="/dashboard/predictions" active={currentPath === '/dashboard/predictions'} />
+            <Nav label="Semantic Search" icon={FileSearch} to="/dashboard/search" active={currentPath === '/dashboard/search'} />
             <Nav label="Case ledger" icon={Search} to="/dashboard/cases" active={currentPath === '/dashboard/cases'} />
           </nav>
           <div className="mt-8 rounded-none border border-[#c6a75b]/15 bg-[#c6a75b]/[.06] p-4">
@@ -71,6 +73,7 @@ const Dashboard = () => {
             <Route path="/cases" element={<CaseLedger />} />
             <Route path="/geospatial" element={<PlaceholderTab title="Geospatial Analytics" />} />
             <Route path="/network" element={<PlaceholderTab title="Network Analysis" />} />
+            <Route path="/search" element={<SemanticSearch />} />
             <Route path="/predictions" element={<PlaceholderTab title="AI Predictive Forecasting" />} />
           </Routes>
         </main>

@@ -10,14 +10,14 @@ interface UploadCaseModalProps {
 
 const UploadCaseModal: React.FC<UploadCaseModalProps> = ({ isOpen, onClose, onSuccess }) => {
   const [file, setFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [status, setStatus] = useState<'IDLE' | 'UPLOADING' | 'PROCESSING' | 'SUCCESS' | 'FAILURE'>('IDLE');
   const [entitiesExtracted, setEntitiesExtracted] = useState<number | null>(null);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
+    let intervalId: ReturnType<typeof setTimeout>;
 
     if (taskId && (status === 'PROCESSING' || status === 'UPLOADING')) {
       intervalId = setInterval(async () => {
