@@ -1,0 +1,14 @@
+INCIDENT REPORT
+Case No: 2026-BLR-8921
+Date: 2026-07-22
+Reporting Officer: Insp. Rajesh Kumar, Cyber Cell, Bangalore
+
+INCIDENT NARRATIVE:
+On July 21st, 2026, a complaint was received from Mrs. Anjali Desai regarding a sophisticated cryptocurrency scam. She reported that an individual calling himself "Vikram Singh" contacted her via Telegram (handle: @CryptoKingVik, linked to phone number +91-98765-43210). He promised 200% returns on investments within 48 hours.
+
+Mrs. Desai was instructed to deposit INR 5,00,000 into a bank account held at HDFC Bank (Account Number: 50100234891234, IFSC: HDFC0001234) under the name of "Global Tech Solutions". After the transfer, Vikram Singh cut off all communication and deleted his Telegram account. 
+
+Subsequent investigation revealed that the HDFC account was opened using forged documents and the IP address (192.168.45.12) used to access the net banking portal traces back to a cyber cafe in Indiranagar, Bangalore. 
+
+MODUS OPERANDI:
+The suspect targets individuals on messaging apps with promises of unrealistic returns on crypto investments. Uses mule bank accounts registered under fake company names to receive funds, quickly moving them out to unknown crypto wallets to avoid tracing.

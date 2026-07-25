@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search as SearchIcon, Plus, ChevronLeft, ChevronRight, Trash2, Calendar, MapPin, Tag, FileText, AlertCircle, RefreshCw } from 'lucide-react';
 import { getCases, createCase, deleteCase } from '../services/api';
 import type { CaseResponse } from '../services/api';
+import UploadCaseModal from '../components/UploadCaseModal';
 
 const CaseLedger: React.FC = () => {
   const [allCases, setAllCases] = useState<CaseResponse[]>([]);
@@ -15,6 +16,7 @@ const CaseLedger: React.FC = () => {
 
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [firNumber, setFirNumber] = useState('');
   const [dateReported, setDateReported] = useState('');
   const [district, setDistrict] = useState('');
@@ -27,12 +29,13 @@ const CaseLedger: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // Load complete dataset for full ledger client search
-      const data = await getCases(0, 1000);
+      // Load dataset within API limit of 500
+      const data = await getCases(0, 500);
       setAllCases(data);
     } catch (err: any) {
       console.error('Error fetching cases:', err);
-      setError(err.response?.data?.detail || 'Failed to load case records.');
+      const detail = err.response?.data?.detail;
+      setError(typeof detail === 'string' ? detail : 'Failed to load case records.');
     } finally {
       setLoading(false);
     }
@@ -43,19 +46,19 @@ const CaseLedger: React.FC = () => {
   }, []);
 
   // Filter cases client-side for immediate responsive search experience on full ledger
-  const filteredCases = allCases.filter((c) => {
-    const query = searchQuery.toLowerCase();
+  const filteredCases = (allCases || []).filter((c) => {
+    const query = searchQuery?.toLowerCase() || '';
     return (
-      c.fir_number.toLowerCase().includes(query) ||
-      c.district.toLowerCase().includes(query) ||
-      c.status.toLowerCase().includes(query) ||
-      (c.description && c.description.toLowerCase().includes(query))
+      (c?.fir_number?.toLowerCase().includes(query)) ||
+      (c?.district?.toLowerCase().includes(query)) ||
+      (c?.status?.toLowerCase().includes(query)) ||
+      (c?.description?.toLowerCase().includes(query))
     );
   });
 
   // Calculate displayed slice and hasMore dynamically on filtered cases
-  const displayedCases = filteredCases.slice((page - 1) * limit, page * limit);
-  const hasMore = filteredCases.length > page * limit;
+  const displayedCases = (filteredCases || []).slice((page - 1) * limit, page * limit);
+  const hasMore = (filteredCases || []).length > page * limit;
 
   // Reset page to 1 whenever search query changes
   useEffect(() => {
@@ -147,7 +150,7 @@ const CaseLedger: React.FC = () => {
 
 
   const getStatusBadgeClass = (statusStr: string) => {
-    switch (statusStr.toLowerCase()) {
+    switch (statusStr?.toLowerCase()) {
       case 'open':
         return 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300';
       case 'closed':
@@ -171,12 +174,20 @@ const CaseLedger: React.FC = () => {
             Relational records of KSP FIR case files, officer reporting logs, and active status registers.
           </p>
         </div>
-        <button
-          onClick={handleOpenModal}
-          className="inline-flex items-center gap-2 rounded-none border border-[#c6a75b] bg-[#c6a75b]/10 px-4 py-2.5 text-xs font-semibold text-[#e2c979] hover:bg-[#c6a75b]/25 transition-all cursor-pointer"
-        >
-          <Plus size={16} /> LOG NEW CASE
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-none border border-emerald-500 bg-emerald-500/10 px-4 py-2.5 text-xs font-semibold text-emerald-400 hover:bg-emerald-500/25 transition-all cursor-pointer"
+          >
+            <Plus size={16} /> UPLOAD AI CASE
+          </button>
+          <button
+            onClick={handleOpenModal}
+            className="inline-flex items-center gap-2 rounded-none border border-[#c6a75b] bg-[#c6a75b]/10 px-4 py-2.5 text-xs font-semibold text-[#e2c979] hover:bg-[#c6a75b]/25 transition-all cursor-pointer"
+          >
+            <Plus size={16} /> LOG NEW CASE
+          </button>
+        </div>
       </div>
 
       {/* Main Ledger Content */}
@@ -249,27 +260,27 @@ const CaseLedger: React.FC = () => {
                 </tr>
               ) : (
                 displayedCases.map((c) => (
-                  <tr key={c.id} className="hover:bg-white/[0.015] transition-all">
-                    <td className="py-4 pl-4 font-mono font-bold text-white">{c.fir_number}</td>
+                  <tr key={c?.id || Math.random()} className="hover:bg-white/[0.015] transition-all">
+                    <td className="py-4 pl-4 font-mono font-bold text-white">{c?.fir_number || 'N/A'}</td>
                     <td className="py-4 text-xs text-slate-400">
-                      {new Date(c.date_reported).toLocaleString('en-IN', {
+                      {c?.date_reported ? new Date(c.date_reported).toLocaleString('en-IN', {
                         timeZone: 'Asia/Kolkata',
                         dateStyle: 'medium',
                         timeStyle: 'short',
-                      })}
+                      }) : 'N/A'}
                     </td>
-                    <td className="py-4 font-medium text-slate-200">{c.district}</td>
+                    <td className="py-4 font-medium text-slate-200">{c?.district || 'N/A'}</td>
                     <td className="py-4">
-                      <span className={`inline-block border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${getStatusBadgeClass(c.status)}`}>
-                        {c.status}
+                      <span className={`inline-block border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${getStatusBadgeClass(c?.status || 'Open')}`}>
+                        {c?.status || 'Unknown'}
                       </span>
                     </td>
-                    <td className="py-4 max-w-xs truncate text-xs text-slate-400" title={c.description || ''}>
-                      {c.description || <span className="italic text-slate-600">No notes provided</span>}
+                    <td className="py-4 max-w-xs truncate text-xs text-slate-400" title={c?.description || ''}>
+                      {c?.description || <span className="italic text-slate-600">No notes provided</span>}
                     </td>
                     <td className="py-4 text-right pr-4">
                       <button
-                        onClick={() => handleDelete(c.id, c.fir_number)}
+                        onClick={() => c?.id && handleDelete(c.id, c.fir_number)}
                         className="inline-grid h-8 w-8 place-items-center border border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/25 transition-all cursor-pointer"
                         title="Delete Record"
                       >
@@ -435,6 +446,15 @@ const CaseLedger: React.FC = () => {
         </div>
       )}
 
+      <UploadCaseModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onSuccess={() => {
+          setPage(1);
+          setSearchQuery('');
+          fetchCases();
+        }}
+      />
     </div>
   );
 };
