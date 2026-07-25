@@ -118,15 +118,18 @@ if __package__:
     from .api.v1.cases import router as cases_router
     from .api.v1.ingest import router as ingest_router
     from .api.v1.graph import router as graph_router
+    from .api.v1.search import router as search_router
 else:
     from api.deps import get_current_user
     from api.v1.cases import router as cases_router
     from api.v1.ingest import router as ingest_router
     from api.v1.graph import router as graph_router
+    from api.v1.search import router as search_router
 
 app.include_router(cases_router, prefix="/api/v1")
 app.include_router(ingest_router, prefix="/api/v1")
 app.include_router(graph_router, prefix="/api/v1")
+app.include_router(search_router, prefix="/api/v1")
 
 @app.get("/health", tags=["Health"])
 async def health_check():
