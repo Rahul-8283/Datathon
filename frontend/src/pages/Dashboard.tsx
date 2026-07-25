@@ -1,4 +1,4 @@
-import { Activity, ArrowUpRight, Bell, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut } from 'lucide-react';
+import { Activity, ArrowUpRight, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import CaseLedger from './CaseLedger';
@@ -17,29 +17,19 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#07110f] text-slate-200">
-      <header className="sticky top-0 z-20 border-b border-white/8 bg-[#091713]/90 px-4 py-3 backdrop-blur-xl sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-20 bg-transparent px-4 py-3 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button className="grid h-9 w-9 place-items-center rounded-none border border-white/10 text-slate-300 lg:hidden">
               <Menu size={18} />
             </button>
-            <span className="grid h-9 w-9 place-items-center rounded-none bg-[#c6a75b] text-[#10231d]">
-              <ShieldCheck size={19} />
-            </span>
-            <div>
-              <p className="font-display text-sm font-bold text-white">KSP Intelligence</p>
-              <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-emerald-100/45">Command centre</p>
+            <div className="flex items-baseline gap-2">
+              <p className="font-display text-lg font-bold text-white">KSP Intelligence</p>
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-emerald-100/45">Command centre</p>
             </div>
           </div>
-          <div className="hidden max-w-md flex-1 items-center gap-2 rounded-none border border-white/8 bg-white/[0.035] px-3 py-2 text-sm text-slate-500 md:flex">
-            <Search size={16} />
-            <span>Search cases, persons, locations…</span>
-          </div>
+
           <div className="flex items-center gap-4">
-            <button className="relative grid h-9 w-9 place-items-center rounded-none border border-white/10 text-slate-300">
-              <Bell size={17} />
-              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#e5b956]" />
-            </button>
             <div className="hidden border-l border-white/10 pl-4 sm:block">
               <p className="text-xs font-semibold text-white">{user?.email || 'Officer Session'}</p>
               <p className="text-[10px] text-slate-500 font-mono">Karnataka · Authenticated</p>
@@ -116,7 +106,7 @@ const OverviewTab = () => {
       <section className="mt-5 grid gap-5 xl:grid-cols-[1.35fr_.85fr]">
         <div className="rounded-none border border-white/8 bg-[#0c211b] p-5 sm:p-6">
           <PanelHeading title="Crime activity signal" subtitle="Weekly incidents against historical baseline" />
-          <div className="mt-8 flex h-48 items-end gap-2 sm:gap-3">
+          <div className="mt-6 flex h-36 items-end gap-2 sm:gap-3">
             {weeklySignal.map((height, index) => (
               <div key={index} className="group relative flex h-full flex-1 items-end">
                 <div
@@ -129,7 +119,7 @@ const OverviewTab = () => {
               </div>
             ))}
           </div>
-          <div className="mt-10 flex items-center gap-5 text-[11px] text-slate-400">
+          <div className="mt-6 flex items-center gap-5 text-[11px] text-slate-400">
             <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-emerald-300/50" /> Observed activity</span>
             <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-[#d9ba69]" /> Attention threshold</span>
           </div>
@@ -145,7 +135,7 @@ const OverviewTab = () => {
           </div>
           <div className="mt-4 divide-y divide-white/7">
             {alerts.map(([type, title, detail, tone]) => (
-              <div key={title} className="flex gap-3 py-4 first:pt-2">
+              <div key={title} className="flex gap-3 py-3 first:pt-2">
                 <span className={`mt-1 h-2 w-2 shrink-0 rounded-full ${tone === 'amber' ? 'bg-[#e7ba5c]' : tone === 'coral' ? 'bg-[#ef7763]' : 'bg-emerald-300'}`} />
                 <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{type}</p>
@@ -173,8 +163,8 @@ const PlaceholderTab = ({ title }: { title: string }) => (
 );
 
 const Nav = ({ label, icon: Icon, to, active = false }: { label: string; icon: typeof Activity; to: string; active?: boolean }) => (
-  <Link 
-    to={to} 
+  <Link
+    to={to}
     className={`flex w-full items-center gap-3 rounded-none px-3 py-2.5 text-sm transition ${active ? 'bg-emerald-200/10 font-semibold text-emerald-100' : 'text-slate-400 hover:bg-white/[.04] hover:text-white'}`}
   >
     <Icon size={17} />

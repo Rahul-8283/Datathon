@@ -117,7 +117,7 @@ export const Login: React.FC = () => {
       {/* Main Authentication Section */}
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-sm bg-[#0c211b]/95 border border-white/10 rounded-none p-5 sm:p-6 backdrop-blur-xl shadow-2xl shadow-black/50 space-y-4 relative">
-          
+
           {/* Decorative Grid Accent */}
           <div className="absolute inset-0 opacity-20 pointer-events-none [background-image:linear-gradient(rgba(120,200,168,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(120,200,168,.12)_1px,transparent_1px)] [background-size:28px_28px]" />
 
@@ -142,11 +142,10 @@ export const Login: React.FC = () => {
                 setSuccessMessage(null);
                 setConfirmPassword('');
               }}
-              className={`py-2.5 transition-all cursor-pointer ${
-                !isSignUp
+              className={`py-2.5 transition-all cursor-pointer ${!isSignUp
                   ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               Sign In
             </button>
@@ -158,11 +157,10 @@ export const Login: React.FC = () => {
                 setSuccessMessage(null);
                 setConfirmPassword('');
               }}
-              className={`py-2.5 transition-all cursor-pointer ${
-                isSignUp
+              className={`py-2.5 transition-all cursor-pointer ${isSignUp
                   ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               Register
             </button>
@@ -191,7 +189,7 @@ export const Login: React.FC = () => {
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
-                  <input
+                <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
