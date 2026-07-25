@@ -218,7 +218,7 @@ VITE_SUPABASE_ANON_KEY=your-public-anon-key
    ```
 5. Start the FastAPI development server:
    ```bash
-   uvicorn main.py --reload
+   uvicorn main:app --reload
    ```
 
 ### 2. Setting up the Frontend
