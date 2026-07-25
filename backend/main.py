@@ -38,7 +38,8 @@ async def lifespan(app: FastAPI):
             settings.neo4j_password,
             settings.neo4j_database,
         )
-        redis_client = Redis.from_url(settings.redis_url)
+        redis_url_for_client = settings.redis_url.replace("ssl_cert_reqs=CERT_NONE", "ssl_cert_reqs=none")
+        redis_client = Redis.from_url(redis_url_for_client)
         chroma = ChromaDatabase(settings.chroma_path, settings.chroma_collection_name)
 
         db_statuses = {}
@@ -115,11 +116,14 @@ from fastapi import Depends
 if __package__:
     from .api.deps import get_current_user
     from .api.v1.cases import router as cases_router
+    from .api.v1.ingest import router as ingest_router
 else:
     from api.deps import get_current_user
     from api.v1.cases import router as cases_router
+    from api.v1.ingest import router as ingest_router
 
 app.include_router(cases_router, prefix="/api/v1")
+app.include_router(ingest_router, prefix="/api/v1")
 
 @app.get("/health", tags=["Health"])
 async def health_check():
