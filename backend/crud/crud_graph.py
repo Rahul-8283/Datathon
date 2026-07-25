@@ -35,7 +35,8 @@ def ingest_entities_and_relations(driver: Driver, extracted_data) -> None:
                 rel_type = rel.relation_type
                 # Relationship types also cannot be parameterized, but they are Enum constrained.
                 query = f"""
-                MATCH (a {{id: $source_id}}), (b {{id: $target_id}})
+                MATCH (a {{id: $source_id}})
+                MATCH (b {{id: $target_id}})
                 MERGE (a)-[r:{rel_type}]->(b)
                 """
                 session.run(
