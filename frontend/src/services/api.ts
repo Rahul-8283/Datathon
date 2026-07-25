@@ -54,3 +54,20 @@ export const deleteCase = async (caseId: string): Promise<CaseResponse> => {
   const response = await api.delete<CaseResponse>(`/api/v1/cases/${caseId}`);
   return response.data;
 };
+
+export const uploadCaseFile = async (file: File): Promise<{ message: string; task_id: string }> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const response = await api.post('/api/v1/ingest/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
+export const checkTaskStatus = async (taskId: string): Promise<{ task_id: string; status: string; result?: any; info?: any }> => {
+  const response = await api.get(`/api/v1/ingest/status/${taskId}`);
+  return response.data;
+};
