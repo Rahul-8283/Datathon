@@ -14,15 +14,17 @@ from services.agent.state import AgentState
 
 def test_pipeline():
     sample_text = """
-    Case Report - 2023-04-15
-    Incident: Vehicle Theft & Assault
-    Location: 123 Main St, K.R. Puram, Bangalore
+    FIR No: 104/2023
+    Police Station: Indiranagar PS
     
-    On Tuesday evening, suspect J. Doe (Phone: 9988776655) was spotted near the crime scene. 
-    Witnesses reported seeing John Doe fleeing the scene in a stolen red Honda Civic (KA-01-AB-1234).
-    The victim, Ramesh Kumar, was assaulted and his vehicle was taken. 
-    Later, we found that Ramesh's phone was also stolen. J. Doe was seen communicating with an associate 
-    using the number 9988776655.
+    On 2023-11-05 at approximately 23:30 hours, a raid was conducted at an abandoned warehouse 
+    near 100ft Road, Indiranagar. The raid targeted the notorious 'D-Company' syndicate.
+    Officers apprehended the main suspect, Vikram alias 'Vicky' (Phone: 9876543210), who was found 
+    in possession of 2 kilograms of cocaine and a country-made pistol. 
+    During interrogation, Vicky confessed to transferring drug money to a bank account (HDFC Acc: 0123456789) 
+    belonging to his associate, Ravi Kumar. 
+    A black Mahindra Scorpio (KA-03-XY-9999) was seized from the location. 
+    The suspects were booked under NDPS Act Section 8 and IPC 307.
     """
     
     print("--- Starting LangGraph Pipeline Test ---")
@@ -44,9 +46,13 @@ def test_pipeline():
                 
         extracted = final_state.get("extracted_data")
         if extracted:
+            print(f"\nCase Category: {getattr(extracted, 'case_category', 'N/A')}")
+            print(f"Incident Date: {getattr(extracted, 'incident_date', 'N/A')}")
+            print(f"Incident Time: {getattr(extracted, 'incident_time', 'N/A')}")
             print("\nExtracted Entities:")
             for entity in extracted.entities:
-                print(f" - [{entity.entity_type}] {entity.name_or_value} (ID: {entity.id})")
+                role_str = f" (Role: {entity.person_role})" if getattr(entity, 'person_role', None) else ""
+                print(f" - [{entity.entity_type}] {entity.name_or_value} (ID: {entity.id}){role_str}")
                 
             print("\nExtracted Relationships:")
             for rel in extracted.relationships:
