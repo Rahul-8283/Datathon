@@ -77,3 +77,14 @@ def get_db(request: Request) -> Generator[Session, None, None]:
         yield db
     finally:
         db.close()
+
+from neo4j import Driver
+def get_neo4j(request: Request) -> Driver:
+    """Dependency to retrieve the Neo4j Driver."""
+    neo4j_db = getattr(request.app.state, "neo4j", None)
+    if neo4j_db is None or neo4j_db._driver is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Neo4j connection is not initialized",
+        )
+    return neo4j_db._driver
