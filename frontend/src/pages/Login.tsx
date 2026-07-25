@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
 import { useAuthStore } from '../store/authStore';
-import { ShieldCheck, Lock, Mail, AlertCircle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Lock, Mail, AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -26,6 +27,12 @@ export const Login: React.FC = () => {
 
     if (!email || !password) {
       setErrorMessage('Please enter both official email address and security password.');
+      setLoading(false);
+      return;
+    }
+
+    if (isSignUp && password !== confirmPassword) {
+      setErrorMessage('Passwords do not match. Please verify your security password.');
       setLoading(false);
       return;
     }
@@ -90,12 +97,9 @@ export const Login: React.FC = () => {
       <div className="absolute inset-x-0 top-0 -z-10 h-[680px] bg-[radial-gradient(circle_at_72%_18%,rgba(40,137,113,0.25),transparent_27%),radial-gradient(circle_at_15%_12%,rgba(198,167,91,0.12),transparent_22%)]" />
 
       {/* Full-Width Navbar matching Landing & Dashboard */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07110f]/90 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 bg-[#07110f]/90 px-4 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-none bg-[#c6a75b] text-[#10231d]">
-              <ShieldCheck size={19} />
-            </span>
             <div>
               <span className="font-display block text-lg font-bold tracking-tight text-white">KSP Intelligence</span>
               <p className="text-[10px] font-bold uppercase tracking-[.16em] text-emerald-100/45">State Crime Records Bureau</p>
@@ -111,17 +115,13 @@ export const Login: React.FC = () => {
       </header>
 
       {/* Main Authentication Section */}
-      <main className="flex-1 flex items-center justify-center p-5 sm:p-8">
-        <div className="w-full max-w-md bg-[#0c211b]/95 border border-white/10 rounded-none p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-black/50 space-y-6 relative">
-          
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-sm bg-[#0c211b]/95 border border-white/10 rounded-none p-5 sm:p-6 backdrop-blur-xl shadow-2xl shadow-black/50 space-y-4 relative">
+
           {/* Decorative Grid Accent */}
           <div className="absolute inset-0 opacity-20 pointer-events-none [background-image:linear-gradient(rgba(120,200,168,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(120,200,168,.12)_1px,transparent_1px)] [background-size:28px_28px]" />
 
           <div className="relative z-10 text-center space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-none border border-emerald-200/15 bg-emerald-300/[0.06] px-3 py-1.5 text-xs font-semibold text-emerald-100/80 mb-1">
-              <Sparkles size={13} className="text-[#d8bb70]" />
-              Restricted Officer Portal
-            </div>
             <h2 className="font-display text-2xl font-semibold tracking-[-0.035em] text-white sm:text-3xl">
               {isSignUp ? 'Officer Registration' : 'Command Sign In'}
             </h2>
@@ -140,12 +140,12 @@ export const Login: React.FC = () => {
                 setIsSignUp(false);
                 setErrorMessage(null);
                 setSuccessMessage(null);
+                setConfirmPassword('');
               }}
-              className={`py-2.5 transition-all cursor-pointer ${
-                !isSignUp
+              className={`py-2.5 transition-all cursor-pointer ${!isSignUp
                   ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               Sign In
             </button>
@@ -155,12 +155,12 @@ export const Login: React.FC = () => {
                 setIsSignUp(true);
                 setErrorMessage(null);
                 setSuccessMessage(null);
+                setConfirmPassword('');
               }}
-              className={`py-2.5 transition-all cursor-pointer ${
-                isSignUp
+              className={`py-2.5 transition-all cursor-pointer ${isSignUp
                   ? 'bg-[#c6a75b] text-[#10231d] font-bold shadow-md'
                   : 'text-slate-400 hover:text-white'
-              }`}
+                }`}
             >
               Register
             </button>
@@ -182,7 +182,7 @@ export const Login: React.FC = () => {
           )}
 
           {/* Auth Form */}
-          <form onSubmit={handleAuth} className="relative z-10 space-y-4">
+          <form onSubmit={handleAuth} className="relative z-10 space-y-3">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400 font-mono">
                 Official Email Address
@@ -194,7 +194,7 @@ export const Login: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="officer@ksp.gov.in"
-                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-3 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
+                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-2.5 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
                   required
                 />
               </div>
@@ -211,16 +211,35 @@ export const Login: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-3 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
+                  className="w-full bg-[#102a23] border border-white/12 rounded-none py-2.5 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
                   required
                 />
               </div>
             </div>
 
+            {isSignUp && (
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400 font-mono">
+                  Confirm Security Password
+                </label>
+                <div className="relative">
+                  <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    className="w-full bg-[#102a23] border border-white/12 rounded-none py-2.5 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#c6a75b] focus:ring-1 focus:ring-[#c6a75b] transition-colors"
+                    required={isSignUp}
+                  />
+                </div>
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-5 bg-[#c6a75b] hover:bg-[#e0c477] text-[#11231e] font-bold text-xs uppercase tracking-[.16em] rounded-none transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-lg shadow-[#c6a75b]/20 mt-3"
+              className="w-full py-3 px-5 bg-[#c6a75b] hover:bg-[#e0c477] text-[#11231e] font-bold text-xs uppercase tracking-[.16em] rounded-none transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-lg shadow-[#c6a75b]/20 mt-3"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-[#11231e]/30 border-t-[#11231e] rounded-full animate-spin" />
@@ -234,7 +253,7 @@ export const Login: React.FC = () => {
           </form>
 
           {/* Divider */}
-          <div className="relative z-10 flex items-center gap-3 my-4">
+          <div className="relative z-10 flex items-center gap-3 my-3">
             <div className="flex-1 h-[1px] bg-white/10" />
             <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500">OR SSO</span>
             <div className="flex-1 h-[1px] bg-white/10" />
@@ -246,7 +265,7 @@ export const Login: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full py-3 px-4 bg-white/[0.04] hover:bg-white/[0.08] border border-white/12 text-slate-200 text-xs font-semibold uppercase tracking-wider rounded-none transition flex items-center justify-center gap-3 cursor-pointer"
+              className="w-full py-2.5 px-4 bg-white/[0.04] hover:bg-white/[0.08] border border-white/12 text-slate-200 text-xs font-semibold uppercase tracking-wider rounded-none transition flex items-center justify-center gap-3 cursor-pointer"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
@@ -270,14 +289,11 @@ export const Login: React.FC = () => {
             </button>
           </div>
 
-          <div className="relative z-10 pt-2 text-center text-[10px] uppercase tracking-widest text-slate-500 border-t border-white/8 font-mono">
-            Restricted System · Karnataka Police Security Protocol
-          </div>
         </div>
       </main>
 
       {/* Footer matching Landing & Dashboard */}
-      <footer className="border-t border-white/8 px-5 py-6 text-center text-xs text-slate-500 font-mono">
+      <footer className="px-5 py-6 text-center text-xs text-slate-500 font-mono">
         © 2026 Karnataka State Police · Strategic Crime Intelligence Hub
       </footer>
     </div>

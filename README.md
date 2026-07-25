@@ -5,25 +5,11 @@ This platform transforms static, siloed Excel sheets and manual records into a s
 
 <div align="center">
 
-[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/) [![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Leaflet](https://img.shields.io/badge/Leaflet-%23199900.svg?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com/) [![D3.js](https://img.shields.io/badge/d3.js-%23F9A03F.svg?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-%23005571.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![LangGraph](https://img.shields.io/badge/LangGraph-%23121011.svg?style=for-the-badge&logo=chainlink&logoColor=white)](https://github.com/langchain-ai/langgraph) [![Celery](https://img.shields.io/badge/Celery-%2337814A.svg?style=for-the-badge&logo=celery&logoColor=white)](https://docs.celeryq.dev/) [![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/) [![Upstash](https://img.shields.io/badge/Upstash-00E9A3?style=for-the-badge&logo=upstash&logoColor=white)](https://upstash.com/) [![PostgreSQL](https://img.shields.io/badge/postgres-%23316194.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![Neo4j](https://img.shields.io/badge/Neo4j-%23008CC1.svg?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com/) [![Supabase](https://img.shields.io/badge/Supabase-%233ECF8E.svg?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) [![ChromaDB](https://img.shields.io/badge/ChromaDB-%23FC8019.svg?style=for-the-badge)](https://www.trychroma.com/) [![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/) [![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/) [![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/) [![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/) [![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Leaflet](https://img.shields.io/badge/Leaflet-%23199900.svg?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com/) [![D3.js](https://img.shields.io/badge/d3.js-%23F9A03F.svg?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-%23005571.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![LangGraph](https://img.shields.io/badge/LangGraph-%23121011.svg?style=for-the-badge&logo=chainlink&logoColor=white)](https://github.com/langchain-ai/langgraph) [![Celery](https://img.shields.io/badge/Celery-%2337814A.svg?style=for-the-badge&logo=celery&logoColor=white)](https://docs.celeryq.dev/) [![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/) [![Upstash](https://img.shields.io/badge/Upstash-00E9A3?style=for-the-badge&logo=upstash&logoColor=white)](https://upstash.com/) [![PostgreSQL](https://img.shields.io/badge/postgres-%23316194.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![Neo4j](https://img.shields.io/badge/Neo4j-%23008CC1.svg?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com/) [![Supabase](https://img.shields.io/badge/Supabase-%233ECF8E.svg?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) [![ChromaDB](https://img.shields.io/badge/ChromaDB-%23FC8019.svg?style=for-the-badge)](https://www.trychroma.com/) [![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/) [![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/) [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/) [![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/) [![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
 
 </div>
 
 
-## 🚦 Implementation Status & Roadmap
-
-- [x] **Phase 1: Database Connections & ORM Setup** — Polyglot persistence connections established (PostgreSQL/Supabase, Neo4j Aura, ChromaDB, Upstash Redis) with FastAPI lifespan lifecycle management.
-- [x] **Phase 2: Authentication & User Management** — Security perimeter established with Supabase Auth, JWT verification dependencies, Zustand session store, protected React routes, and officer login/registration portal.
-- [x] **Phase 3: Case Ledger & Core Data Models** — Database schemas, ORM models, and CRUD operations for FIR cases, suspects, and entities.
-- [ ] **Phase 4: Multi-Agent Ingestion Pipeline (LangGraph)** — Automated entity extraction, linkage, and geocoding from unstructured case diaries.
-- [ ] **Phase 5: Graph Link Analysis & Network Graph** — PageRank, shortest-path calculation, and interactive criminal network visualization.
-- [ ] **Phase 6: Geospatial Analytics & Spatiotemporal Hotspots** — District drill-downs, dynamic time-slider heatmaps, and crime spike warnings.
-- [ ] **Phase 7: AI Predictive Forecasting & Anomaly Detection** — Time-series projections (Prophet) and isolation forest outlier detection.
-- [ ] **Phase 8: Search & Semantic MO Discovery** — Vector similarity search across modus operandi notes.
-- [ ] **Phase 9: Real-time Incident Ticker & Alerts** — Websocket notification stream for priority intelligence events.
-- [ ] **Phase 10: Production Hardening, Audit & Deployment** — Containerization, security audit logs, and cloud deployment.
-
----
 
 ## 🏛️ Architecture Overview & How We Solve It
 
@@ -102,6 +88,7 @@ graph TD
 | | **LangGraph** | Orchestrates the multi-agent ETL pipeline for case data. |
 | | **Celery + Redis** | Asynchronous background processing for ETL and ML tasks. |
 | | **OpenRouter / Gemini (Fallback)** | Primary/secondary LLM integration powering text reasoning & parsing agent pipelines. |
+| | **Hugging Face (all-MiniLM)** | High-speed semantic text embeddings for Modus Operandi vectorization. |
 | **Database** | **PostgreSQL (Supabase)** | Core system logs, user schemas, and tabular crime files. |
 | | **Neo4j Aura** | Graph database for suspect networks and link analysis. |
 | | **Pinecone (Local)** | Semantic search vector database for MO notes. |
@@ -159,6 +146,7 @@ PORT=8000
 SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-never-share
 DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.your-project-id.supabase.co:5432/postgres
+SUPABASE_JWT_SECRET=DATATHON
 
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
@@ -219,6 +207,14 @@ VITE_SUPABASE_ANON_KEY=your-public-anon-key
 5. Start the FastAPI development server:
    ```bash
    uvicorn main:app --reload
+   ```
+6. In a separate terminal, start the Celery background worker (ensure the virtual environment is activated):
+   ```bash
+   # On Windows:
+   celery -A core.celery_app worker --loglevel=info --pool=solo
+   
+   # On Mac/Linux:
+   celery -A core.celery_app worker --loglevel=info
    ```
 
 ### 2. Setting up the Frontend

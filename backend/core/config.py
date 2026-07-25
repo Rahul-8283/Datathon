@@ -41,6 +41,7 @@ class Settings(BaseSettings):
     )
     openrouter_api_key: str = Field(validation_alias=AliasChoices("OPENROUTER_API_KEY"))
     gemini_api_key: str = Field(validation_alias=AliasChoices("GEMINI_API_KEY"))
+    huggingface_api_key: str = Field(validation_alias=AliasChoices("HUGGINGFACE_API_KEY"))
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE,
