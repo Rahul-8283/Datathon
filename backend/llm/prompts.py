@@ -26,11 +26,12 @@ Strictly adhere to the following rules:
      `INVOLVED_IN`, `VICTIM_OF`, `WITNESSED`, `MEMBER_OF`, `ASSOCIATE_OF`, `RELATED_TO`, `TRANSACTED_WITH`,
      `RECOVERED_FROM`, `CHARGED_UNDER`.
 
-3. **Case Category**:
+3. **Case Category & Metadata**:
    - Set `case_category` to the crime type in standard police terminology (e.g. 'Murder', 'Chain Snatching',
      'Vehicle Theft', 'Cyber Fraud', 'NDPS').
    - Infer this from the offence described, the section of law mentioned, or the nature of the loss — never
      default to a single category regardless of what the text says.
+   - Extract the exact `incident_date` (format as YYYY-MM-DD if possible) and `incident_time` (e.g., '14:30' or 'Late night') to power spatiotemporal dashboard maps.
 
 4. **Modus Operandi (MO) Summary**:
    - Provide a concise, category-agnostic summary of the execution pattern — method, tools/weapons, timing,

@@ -100,6 +100,14 @@ class DocumentExtraction(BaseModel):
             "unclear rather than guessing — this is later matched against CrimeHead/CrimeSubHead."
         ),
     )
+    incident_date: Optional[str] = Field(
+        default=None,
+        description="The specific date the incident occurred, preferably in YYYY-MM-DD format if possible to infer. Leave null if not stated."
+    )
+    incident_time: Optional[str] = Field(
+        default=None,
+        description="The time or time range of day the incident occurred (e.g. '14:30', 'Late night', 'Between 2 PM and 4 PM'). Leave null if not stated."
+    )
     entities: List[ExtractedEntity] = Field(
         description="List of all unique entities detected in the text, of any entity_type."
     )
