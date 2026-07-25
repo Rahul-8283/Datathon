@@ -146,6 +146,7 @@ PORT=8000
 SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-never-share
 DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.your-project-id.supabase.co:5432/postgres
+SUPABASE_JWT_SECRET=DATATHON
 
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
