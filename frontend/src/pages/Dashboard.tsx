@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import CaseLedger from './CaseLedger';
 import SemanticSearch from './SemanticSearch';
+import NetworkAnalysis from './NetworkAnalysis';
 
 const weeklySignal = [44, 52, 48, 61, 56, 72, 69, 82, 76, 91, 84, 96];
 const alerts = [
@@ -70,11 +71,11 @@ const Dashboard = () => {
         <main className="min-w-0 flex-1">
           <Routes>
             <Route path="/" element={<OverviewTab />} />
-            <Route path="/cases" element={<CaseLedger />} />
             <Route path="/geospatial" element={<PlaceholderTab title="Geospatial Analytics" />} />
-            <Route path="/network" element={<PlaceholderTab title="Network Analysis" />} />
-            <Route path="/search" element={<SemanticSearch />} />
+            <Route path="/network" element={<NetworkAnalysis />} />
             <Route path="/predictions" element={<PlaceholderTab title="AI Predictive Forecasting" />} />
+            <Route path="/search" element={<SemanticSearch />} />
+            <Route path="/cases" element={<CaseLedger />} />
           </Routes>
         </main>
       </div>

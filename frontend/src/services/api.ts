@@ -71,6 +71,7 @@ export const checkTaskStatus = async (taskId: string): Promise<{ task_id: string
   const response = await api.get(`/api/v1/ingest/status/${taskId}`);
   return response.data;
 };
+
 // Search Interfaces
 export interface SearchResult {
   id: string;
@@ -87,5 +88,28 @@ export const searchModusOperandi = async (query: string, limit: number = 5): Pro
   const response = await api.get('/api/v1/search/mo', {
     params: { query, limit },
   });
+  return response.data;
+};
+
+// Graph Interfaces
+export interface GraphNode {
+  id: string;
+  label: string;
+  properties: Record<string, any>;
+}
+
+export interface GraphLink {
+  source: string;
+  target: string;
+  type: string;
+}
+
+export interface GraphData {
+  nodes: GraphNode[];
+  links: GraphLink[];
+}
+
+export const getNetworkGraph = async (): Promise<GraphData> => {
+  const response = await api.get('/api/v1/graph/network');
   return response.data;
 };
