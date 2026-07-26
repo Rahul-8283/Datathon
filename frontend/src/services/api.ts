@@ -132,3 +132,42 @@ export const getOverviewStats = async (): Promise<OverviewStats> => {
   const response = await api.get('/api/v1/stats/overview');
   return response.data;
 };
+
+// Geospatial Interfaces
+export interface DistrictGeospatial {
+  district: string;
+  code: string;
+  lat: number;
+  lng: number;
+  total_cases: number;
+  anomalies: number;
+  risk_level: 'CRITICAL' | 'HIGH' | 'ELEVATED' | 'MODERATE';
+  color: string;
+  crime_rate_change: string;
+  top_crime_type: string;
+}
+
+export interface Hotspot {
+  id: string;
+  fir_number: string;
+  crime_type: string;
+  district: string;
+  lat: number;
+  lng: number;
+  timestamp: string;
+  hour: number;
+  is_anomaly: boolean;
+  intensity: number;
+}
+
+export const getDistrictGeospatial = async (): Promise<DistrictGeospatial[]> => {
+  const response = await api.get('/api/v1/geospatial/districts');
+  return response.data;
+};
+
+export const getSpatiotemporalHotspots = async (time_window = 'ALL'): Promise<Hotspot[]> => {
+  const response = await api.get('/api/v1/geospatial/hotspots', {
+    params: { time_window },
+  });
+  return response.data;
+};
