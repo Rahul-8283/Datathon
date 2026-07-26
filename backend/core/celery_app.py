@@ -29,3 +29,12 @@ celery_app.conf.update(
     enable_utc=True,
     result_expires=3600,
 )
+
+from celery.schedules import crontab
+
+celery_app.conf.beat_schedule = {
+    "daily-retrain-ml-models": {
+        "task": "worker.tasks.retrain_ml_models_task",
+        "schedule": crontab(hour=3, minute=0),
+    },
+}
