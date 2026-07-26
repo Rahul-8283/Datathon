@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-const isDev = import.meta.env.VITE_MODE === 'development';
-const baseURL = (isDev ? import.meta.env.VITE_API_DEV_URL : import.meta.env.VITE_API_PRO_URL) || 'http://127.0.0.1:8000';
+const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const baseURL = isLocalhost
+  ? (import.meta.env.VITE_API_DEV_URL || 'http://127.0.0.1:8000')
+  : (import.meta.env.VITE_API_PRO_URL || 'http://127.0.0.1:8000');
 
 export const api = axios.create({
   baseURL,
