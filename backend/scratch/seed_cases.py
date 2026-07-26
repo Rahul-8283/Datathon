@@ -5,7 +5,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 # Add backend directory to Python path
-backend_path = r"D:/Datathon/backend"
+backend_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if backend_path not in sys.path:
     sys.path.append(backend_path)
 
