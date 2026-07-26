@@ -3,8 +3,8 @@ from services.agent.graph import app as langgraph_app
 from core.config import Settings
 from db.neo4j_client import Neo4jDatabase
 from crud.crud_graph import ingest_entities_and_relations
-from db.chromadb_client import ChromaDatabase
 from crud.crud_vector import add_case_to_vector_store
+from db.database import PostgreSQLDatabase
 
 settings = Settings()
 neo4j_db = Neo4jDatabase(
@@ -13,7 +13,7 @@ neo4j_db = Neo4jDatabase(
     settings.neo4j_password,
     settings.neo4j_database,
 )
-chroma_db = ChromaDatabase(settings.chroma_path, settings.chroma_collection_name)
+postgres_db = PostgreSQLDatabase(settings.database_url)
 
 @celery_app.task(bind=True)
 def process_case_file_task(self, raw_text: str, case_metadata: dict = None):
@@ -33,8 +33,9 @@ def process_case_file_task(self, raw_text: str, case_metadata: dict = None):
             self.update_state(state='PROCESSING', meta={'status': 'Ingesting Graph Data into Neo4j...'})
             ingest_entities_and_relations(neo4j_db._driver, extracted_data)
             
-            self.update_state(state='PROCESSING', meta={'status': 'Generating Semantic Embeddings for ChromaDB...'})
-            doc_id = add_case_to_vector_store(chroma_db, raw_text, metadata=case_metadata)
+            self.update_state(state='PROCESSING', meta={'status': 'Generating Semantic Embeddings for pgvector...'})
+            with postgres_db.session() as db:
+                doc_id = add_case_to_vector_store(db, raw_text, metadata=case_metadata)
         
         if extracted_data and hasattr(extracted_data, "entities"):
             entities_count = len(extracted_data.entities)
@@ -50,7 +51,7 @@ def process_case_file_task(self, raw_text: str, case_metadata: dict = None):
         self.update_state(state='FAILURE', meta={'exc_type': type(e).__name__, 'exc_message': str(e)})
         raise e
 
-from db.database import PostgreSQLDatabase
+
 from services.ml.forecaster import generate_prophet_forecast
 from services.ml.anomaly import run_anomaly_detection
 from redis import Redis

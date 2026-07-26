@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy import String, Text, DateTime, CheckConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
+from pgvector.sqlalchemy import Vector
 
 try:
     from db.database import Base
@@ -26,6 +27,7 @@ class Case(Base):
     )
     description: Mapped[str] = mapped_column(Text, nullable=True)
     is_anomaly: Mapped[bool] = mapped_column(default=False, nullable=True)
+    mo_embedding: Mapped[list[float]] = mapped_column(Vector(384), nullable=True)
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False

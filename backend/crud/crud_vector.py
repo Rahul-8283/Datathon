@@ -2,8 +2,11 @@ import uuid
 from typing import List, Dict, Any
 
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+
 from core.config import Settings
-from db.chromadb_client import ChromaDatabase
+from models.document import DocumentEmbedding
 
 # Initialize the embedding model once
 settings = Settings()
@@ -14,70 +17,66 @@ hf_embeddings = HuggingFaceEndpointEmbeddings(
 )
 
 def add_case_to_vector_store(
-    chroma_db: ChromaDatabase, 
+    db: Session,
     raw_text: str, 
     metadata: Dict[str, Any] = None
 ) -> str:
     """
     Generate vector embeddings for a case's raw text using Hugging Face 
-    and store it in ChromaDB with a unique UUID.
+    and store it in PostgreSQL via pgvector, replacing ChromaDB.
     """
     if metadata is None:
         metadata = {}
 
-    collection = chroma_db.get_or_create_mo_collection()
-    
     # Generate the embedding
     embedding = hf_embeddings.embed_query(raw_text)
     
     # Generate a unique mathematical ID
-    doc_id = str(uuid.uuid4())
+    doc_id = uuid.uuid4()
     
-    # Add to ChromaDB
-    collection.add(
-        documents=[raw_text],
-        embeddings=[embedding],
-        metadatas=[metadata],
-        ids=[doc_id]
+    # Save to Postgres
+    new_doc = DocumentEmbedding(
+        id=doc_id,
+        content=raw_text,
+        meta_data=metadata,
+        embedding=embedding
     )
+    db.add(new_doc)
+    db.commit()
     
-    return doc_id
+    return str(doc_id)
 
 def search_similar_mo(
-    chroma_db: ChromaDatabase, 
+    db: Session,
     query: str, 
     limit: int = 5
 ) -> List[Dict[str, Any]]:
     """
-    Search ChromaDB for the most similar past cases based on natural language query.
+    Search PostgreSQL for the most similar past cases using pgvector cosine distance.
     """
-    collection = chroma_db.get_or_create_mo_collection()
-    
     # Generate embedding for the search query
     query_embedding = hf_embeddings.embed_query(query)
     
-    # Query ChromaDB
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=limit
-    )
+    # Query Postgres using pgvector cosine_distance (<=> operator)
+    distance_expr = DocumentEmbedding.embedding.cosine_distance(query_embedding)
+    
+    rows = db.execute(
+        select(DocumentEmbedding, distance_expr.label('distance'))
+        .order_by(distance_expr)
+        .limit(limit)
+    ).all()
     
     formatted_results = []
     
-    # Results is a dictionary with lists of lists (because we can pass multiple queries).
-    # Since we only passed 1 query, we take the 0th index of everything.
-    if results and results.get("documents") and len(results["documents"]) > 0:
-        docs = results["documents"][0]
-        metadatas = results["metadatas"][0]
-        distances = results["distances"][0]
-        ids = results["ids"][0]
+    for row in rows:
+        doc_obj = row.DocumentEmbedding
+        distance = row.distance
         
-        for i in range(len(docs)):
-            formatted_results.append({
-                "id": ids[i],
-                "document": docs[i],
-                "metadata": metadatas[i],
-                "distance": distances[i]  # Lower distance means higher similarity
-            })
+        formatted_results.append({
+            "id": str(doc_obj.id),
+            "document": doc_obj.content,
+            "metadata": doc_obj.meta_data or {},
+            "distance": distance
+        })
             
     return formatted_results

@@ -9,12 +9,10 @@ from starlette.concurrency import run_in_threadpool
 
 if __package__:
     from .core.config import Settings
-    from .db.chromadb_client import ChromaDatabase
     from .db.database import PostgreSQLDatabase
     from .db.neo4j_client import Neo4jDatabase
 else:
     from core.config import Settings
-    from db.chromadb_client import ChromaDatabase
     from db.database import PostgreSQLDatabase
     from db.neo4j_client import Neo4jDatabase
 
@@ -40,7 +38,6 @@ async def lifespan(app: FastAPI):
         )
         redis_url_for_client = settings.redis_url.replace("ssl_cert_reqs=CERT_NONE", "ssl_cert_reqs=none")
         redis_client = Redis.from_url(redis_url_for_client)
-        chroma = ChromaDatabase(settings.chroma_path, settings.chroma_collection_name)
 
         db_statuses = {}
 
@@ -68,19 +65,11 @@ async def lifespan(app: FastAPI):
             db_statuses["redis"] = f"error: {e}"
             logger.warning(f"Redis connection warning: {e}")
 
-        try:
-            await run_in_threadpool(chroma.verify_connectivity)
-            db_statuses["chroma"] = "connected"
-            logger.info("ChromaDB connected successfully.")
-        except Exception as e:
-            db_statuses["chroma"] = f"error: {e}"
-            logger.warning(f"ChromaDB connection warning: {e}")
-
         app.state.settings = settings
         app.state.postgres = postgres
         app.state.neo4j = neo4j
         app.state.redis = redis_client
-        app.state.chroma = chroma
+
         app.state.db_statuses = db_statuses
         app.state.connections_ready = True
         logger.info("Server startup completed. DB statuses: %s", db_statuses)

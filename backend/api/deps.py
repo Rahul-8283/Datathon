@@ -89,16 +89,6 @@ def get_neo4j(request: Request) -> Driver:
         )
     return neo4j_db._driver
 
-from db.chromadb_client import ChromaDatabase
-def get_chroma(request: Request) -> ChromaDatabase:
-    """Dependency to retrieve the ChromaDB client."""
-    chroma_db = getattr(request.app.state, "chroma", None)
-    if chroma_db is None:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="ChromaDB connection is not initialized",
-        )
-    return chroma_db
 
 from redis import Redis
 def get_redis(request: Request) -> Redis:

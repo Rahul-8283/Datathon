@@ -8,6 +8,7 @@ from alembic import context
 from core.config import Settings
 from db.database import Base
 from models.case import Case
+from models.document import DocumentEmbedding
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
