@@ -15,6 +15,7 @@ class CaseCreate(CaseBase):
 
 class CaseResponse(CaseBase):
     id: UUID
+    is_anomaly: Optional[bool] = None
     created_at: datetime
     updated_at: datetime
 
