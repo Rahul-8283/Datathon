@@ -3,15 +3,14 @@ import logging
 from datetime import datetime, timedelta
 from typing import Any, Dict, List
 
-import pandas as pd
-from sqlalchemy import Date, cast, func, select
 from sqlalchemy.orm import Session
+from sqlalchemy import Date, cast, func, select
 
-# Import Prophet - handle potential warnings
 try:
+    import pandas as pd
     from prophet import Prophet
-except ImportError:
-    # If not installed correctly or issues in runtime, we will fall back
+except Exception:
+    pd = None
     Prophet = None
 
 from models.case import Case

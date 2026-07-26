@@ -1,9 +1,14 @@
 import logging
 from typing import List
-import pandas as pd
-from sqlalchemy import select
 from sqlalchemy.orm import Session
-from sklearn.ensemble import IsolationForest
+from sqlalchemy import select
+
+try:
+    import pandas as pd
+    from sklearn.ensemble import IsolationForest
+except Exception:
+    pd = None
+    IsolationForest = None
 
 from models.case import Case
 
