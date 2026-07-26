@@ -99,3 +99,14 @@ def get_chroma(request: Request) -> ChromaDatabase:
             detail="ChromaDB connection is not initialized",
         )
     return chroma_db
+
+from redis import Redis
+def get_redis(request: Request) -> Redis:
+    """Dependency to retrieve the Redis client."""
+    redis_client = getattr(request.app.state, "redis", None)
+    if redis_client is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Redis connection is not initialized",
+        )
+    return redis_client
