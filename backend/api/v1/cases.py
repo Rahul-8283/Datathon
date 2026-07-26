@@ -3,16 +3,10 @@ from sqlalchemy.orm import Session
 from typing import List, Dict, Any
 import uuid
 
-try:
-    from api.deps import get_db, get_current_user
-    from schemas.case import CaseCreate, CaseResponse
-    from crud import crud_case
-    from crud.crud_case import FIRConflictError
-except ImportError:
-    from ...api.deps import get_db, get_current_user
-    from ...schemas.case import CaseCreate, CaseResponse
-    from ...crud import crud_case
-    from ...crud.crud_case import FIRConflictError
+from api.deps import get_db, get_current_user
+from schemas.case import CaseCreate, CaseResponse
+from crud import crud_case
+from crud.crud_case import FIRConflictError
 
 router = APIRouter(prefix="/cases", tags=["Cases"])
 
