@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Activity, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, ShieldCheck, TrendingUp, LogOut, FileSearch, Loader2, Wifi, WifiOff, Radio } from 'lucide-react';
+import { Activity, BrainCircuit, ChevronDown, CircleAlert, MapPinned, Menu, MoreHorizontal, Network, Search, TrendingUp, LogOut, FileSearch, Loader2, Wifi, WifiOff, Radio } from 'lucide-react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import CaseLedger from './CaseLedger';
 import SemanticSearch from './SemanticSearch';
 import NetworkAnalysis from './NetworkAnalysis';
 import GeospatialAnalytics from './GeospatialAnalytics';
+import PredictiveForecasting from './PredictiveForecasting';
 import { getOverviewStats, type OverviewStats } from '../services/api';
 
 // Fallback arrays for charts/alerts
@@ -135,7 +136,7 @@ const Dashboard = () => {
             <Route path="/" element={<OverviewTab />} />
             <Route path="/geospatial" element={<GeospatialAnalytics />} />
             <Route path="/network" element={<NetworkAnalysis />} />
-            <Route path="/predictions" element={<PlaceholderTab title="AI Predictive Forecasting" />} />
+            <Route path="/predictions" element={<PredictiveForecasting />} />
             <Route path="/search" element={<SemanticSearch />} />
             <Route path="/cases" element={<CaseLedger />} />
           </Routes>
@@ -226,15 +227,7 @@ const OverviewTab = () => {
   );
 };
 
-const PlaceholderTab = ({ title }: { title: string }) => (
-  <div className="rounded-none border border-white/8 bg-[#0c211b] p-12 text-center space-y-4">
-    <ShieldCheck className="mx-auto text-[#e2c979] animate-pulse" size={42} />
-    <h2 className="font-display text-base font-bold text-white uppercase tracking-widest">{title}</h2>
-    <p className="text-slate-400 text-sm max-w-md mx-auto leading-relaxed">
-      This operational module is fully configured on backend REST & GraphQL services and ready for presentation integration.
-    </p>
-  </div>
-);
+
 
 const Nav = ({ label, icon: Icon, to, active = false }: { label: string; icon: typeof Activity; to: string; active?: boolean }) => (
   <Link

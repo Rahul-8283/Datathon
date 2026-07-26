@@ -116,7 +116,26 @@ export const getNetworkGraph = async (): Promise<GraphData> => {
   return response.data;
 };
 
-export const runAnomalyDetection = async (): Promise<any> => {
+export interface ForecastPoint {
+  ds: string;
+  yhat: number;
+  yhat_lower: number;
+  yhat_upper: number;
+}
+
+export const getDistrictForecast = async (district: string): Promise<ForecastPoint[]> => {
+  const response = await api.get('/api/v1/ml/forecast', {
+    params: { district },
+  });
+  return response.data;
+};
+
+export const getFlaggedAnomalies = async (): Promise<CaseResponse[]> => {
+  const response = await api.get('/api/v1/ml/anomalies');
+  return response.data;
+};
+
+export const runAnomalyDetection = async (): Promise<CaseResponse[]> => {
   const response = await api.post('/api/v1/ml/anomalies');
   return response.data;
 };
