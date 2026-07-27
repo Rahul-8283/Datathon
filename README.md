@@ -1,28 +1,15 @@
+<div align="center">
+
 # KSP Crime Intelligence & Analytical Platform
 ### AI-Driven Crime Analytics & Visualization Platform for the Karnataka State Police (SCRB)
 
 This platform transforms static, siloed Excel sheets and manual records into a state-of-the-art, proactive Strategic Intelligence Hub. It leverages multi-agent graph database ingestion, geospatial spatiotemporal clustering, sociological correlation, and advanced criminal network link analysis.
 
-<div align="center">
+<br>
 
-[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/) [![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Leaflet](https://img.shields.io/badge/Leaflet-%23199900.svg?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com/) [![D3.js](https://img.shields.io/badge/d3.js-%23F9A03F.svg?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-%23005571.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![LangGraph](https://img.shields.io/badge/LangGraph-%23121011.svg?style=for-the-badge&logo=chainlink&logoColor=white)](https://github.com/langchain-ai/langgraph) [![Celery](https://img.shields.io/badge/Celery-%2337814A.svg?style=for-the-badge&logo=celery&logoColor=white)](https://docs.celeryq.dev/) [![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/) [![Upstash](https://img.shields.io/badge/Upstash-00E9A3?style=for-the-badge&logo=upstash&logoColor=white)](https://upstash.com/) [![PostgreSQL](https://img.shields.io/badge/postgres-%23316194.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![Neo4j](https://img.shields.io/badge/Neo4j-%23008CC1.svg?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com/) [![Supabase](https://img.shields.io/badge/Supabase-%233ECF8E.svg?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) [![ChromaDB](https://img.shields.io/badge/ChromaDB-%23FC8019.svg?style=for-the-badge)](https://www.trychroma.com/) [![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/) [![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/) [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/) [![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/) [![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/) [![TypeScript](https://img.shields.io/badge/typescript-%23007acc.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) [![Leaflet](https://img.shields.io/badge/Leaflet-%23199900.svg?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com/) [![D3.js](https://img.shields.io/badge/d3.js-%23F9A03F.svg?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-%23005571.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![LangGraph](https://img.shields.io/badge/LangGraph-%23121011.svg?style=for-the-badge&logo=chainlink&logoColor=white)](https://github.com/langchain-ai/langgraph) [![Celery](https://img.shields.io/badge/Celery-%2337814A.svg?style=for-the-badge&logo=celery&logoColor=white)](https://docs.celeryq.dev/) [![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/) [![Upstash](https://img.shields.io/badge/Upstash-00E9A3?style=for-the-badge&logo=upstash&logoColor=white)](https://upstash.com/) [![PostgreSQL](https://img.shields.io/badge/postgres-%23316194.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![Neo4j](https://img.shields.io/badge/Neo4j-%23008CC1.svg?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com/) [![Supabase](https://img.shields.io/badge/Supabase-%233ECF8E.svg?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/) [![pgvector](https://img.shields.io/badge/pgvector-%23336791.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector) [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/)
 
 </div>
-
-## 🚦 Implementation Status & Roadmap
-
-- [x] **Phase 1: Database Connections & ORM Setup** — Polyglot persistence connections established (PostgreSQL/Supabase, Neo4j Aura, ChromaDB, Upstash Redis) with FastAPI lifespan lifecycle management.
-- [x] **Phase 2: Authentication & User Management** — Security perimeter established with Supabase Auth, JWT verification dependencies, Zustand session store, protected React routes, and officer login/registration portal with Google OAuth SSO.
-- [x] **Phase 3: Case Ledger & Core Data Models** — Database schemas, ORM models, and CRUD operations for FIR cases, suspects, and entities.
-- [x] **Phase 4: Multi-Agent Ingestion Pipeline (LangGraph)** — Automated entity extraction, linkage, and geocoding from unstructured case diaries.
-- [x] **Phase 5: Graph Link Analysis & Network Graph** — PageRank, shortest-path calculation, and interactive criminal network visualization.
-- [x] **Phase 6: Geospatial Analytics & Spatiotemporal Hotspots** — District risk choropleth, Leaflet GIS mapping, and time-window hotspot filters.
-- [x] **Phase 7: AI Predictive Forecasting & Anomaly Detection** — Time-series projections (Prophet) and isolation forest outlier detection.
-- [x] **Phase 8: Search & Semantic MO Discovery** — Vector similarity search across modus operandi notes via pgvector.
-- [x] **Phase 9: Real-time Incident Ticker & Alerts** — WebSocket notification stream for priority intelligence events and operational status.
-- [x] **Phase 10: Production Hardening, Audit & Deployment** — Containerization, security audit logs, cloud deployment, and production verification.
-
----
 
 ## 🏛️ Architecture Overview & How We Solve It
 
@@ -30,32 +17,41 @@ The solution breaks down the traditional "independent silos" of police data thro
 
 ```mermaid
 graph TD
+    %% Styling Classes
+    classDef ingestion fill:#2B6CB0,stroke:#2C5282,stroke-width:2px,color:#fff,font-weight:bold
+    classDef agents fill:#805AD5,stroke:#553C9A,stroke-width:2px,color:#fff,font-weight:bold
+    classDef database fill:#38A169,stroke:#276749,stroke-width:2px,color:#fff,font-weight:bold
+    classDef ml fill:#DD6B20,stroke:#C05621,stroke-width:2px,color:#fff,font-weight:bold
+    classDef gateway fill:#E53E3E,stroke:#9B2C2C,stroke-width:2px,color:#fff,font-weight:bold
+    classDef frontend fill:#3182CE,stroke:#2B6CB0,stroke-width:2px,color:#fff,font-weight:bold
+    classDef client fill:#4A5568,stroke:#2D3748,stroke-width:2px,color:#fff,font-weight:bold
+
     %% Ingestion Layer
-    A[Excel/CSV/Police Diaries] -->|Uploaded to FastAPI| B[Multi-Agent ETL Pipeline: LangGraph]
-    B -->|Agent 1: Entity & MO Extractor| C[Structured CSV Data]
-    B -->|Agent 2: Network Resolver| D[Entity Connections Graph]
-    B -->|Agent 3: Embeddings Generator| E[Semantic Search Vectorizer]
+    A[📄 Excel/CSV/Police Diaries]:::ingestion -->|Uploaded to FastAPI| B{🧠 Multi-Agent Pipeline: LangGraph}:::agents
+    B -->|Agent 1: Entity & MO Extractor| C[📋 Structured Relational Data]:::ingestion
+    B -->|Agent 2: Network Resolver| D[🔗 Entity Connections Graph]:::ingestion
+    B -->|Agent 3: Embeddings Generator| E[🔢 Semantic Search Vectorizer]:::ingestion
 
     %% Data Sync Layer
-    C -->|Store Relational Data| F[(Supabase PostgreSQL)]
-    D -->|Store Graph Network| G[(Neo4j Aura)]
-    E -->|Store Text Embeddings| H[(Pinecone Local / VectorDB)]
+    C -->|Store Relational Data| F[(🐘 Supabase PostgreSQL)]:::database
+    D -->|Store Graph Network| G[(🌐 Neo4j Aura)]:::database
+    E -->|Store Text Embeddings| H[(📊 pgvector Native DB)]:::database
 
     %% Analytics & ML Layer
-    F & G & H -->|Scheduled Ingestion / Queue| I[Celery Async Tasks]
-    I -->|Time-Series Forecasting| J[Prophet Model]
-    I -->|Anomaly Outlier Detection| K[PyTorch / scikit-learn]
-    I -->|MO Behavioral Clustering| L[K-Means / DBSCAN]
+    F & G & H -->|Scheduled Queue / Trigger| I[⚡ Celery Async Tasks]:::ml
+    I -->|Time-Series Forecasting| J[📈 Prophet Model]:::ml
+    I -->|Anomaly Outlier Detection| K[🚨 scikit-learn]:::ml
+    I -->|MO Behavioral Clustering| L[🧩 K-Means / DBSCAN]:::ml
 
     %% API Gateway & Auth
-    F & G & H & J & K & L -->|API endpoints| M[FastAPI Gateway]
-    N[Supabase Auth / Google OAuth] -->|Access Security| M
+    F & G & H & J & K & L -->|Secure Endpoints| M{🛡️ FastAPI Gateway}:::gateway
+    N[🔐 Supabase Auth / OAuth]:::gateway -.->|Validate Tokens| M
 
     %% Frontend Visualization
-    M -->|JSON APIs / WebSockets| O[React + TS Client]
-    O -->|Interactive Choropleth & Heatmap| P[Leaflet / Mapbox]
-    O -->|Suspect Relationship Graph| Q[React Force Graph 2D]
-    O -->|AI Predictions & Correlations| R[Recharts / D3.js]
+    M -->|JSON REST APIs / WebSockets| O[💻 React + TS Client]:::frontend
+    O -->|Interactive Choropleth & Heatmap| P[🗺️ Leaflet / Mapbox]:::client
+    O -->|Suspect Relationship Graph| Q[🕸️ React Force Graph 2D]:::client
+    O -->|AI Predictions & Correlations| R[📉 Recharts / D3.js]:::client
 ```
 
 ### 1. Ingestion Layer: Multi-Agent ETL Pipeline (LangGraph & FastAPI)
@@ -73,7 +69,7 @@ graph TD
   - Nodes: `Suspect`, `Victim`, `Location`, `Vehicle`, `Phone`, `Case`.
   - Edges: `CO_CONSPIRATOR_WITH`, `COMMUNICATED_WITH`, `SEEN_AT`, `VICTIM_OF`, `INVOLVED_IN`.
   - **Network Calculations:** We run PageRank and Centrality algorithms to isolate ring-leaders, and Shortest-Path algorithms to display the exact linkage path between any two suspects in seconds.
-- **ChromaDB Local:** Modus Operandi descriptions are vectorized (via OpenRouter/Gemini Embeddings) and stored in ChromaDB to query similar cases semantically.
+- **pgvector (PostgreSQL):** Modus Operandi descriptions are vectorized (via OpenRouter/Gemini Embeddings) and stored natively within PostgreSQL using the pgvector extension. This allows querying similar cases semantically via cosine distance without needing a separate database service.
 
 ### 3. Geospatial & Spatiotemporal Visualization (React, Tailwind CSS & Leaflet)
 - **District-Level Drill-down:** A custom interactive choropleth map styled with Tailwind CSS overlays Karnataka's districts. Clicking on a district drills down into sub-stations and local case lists.
@@ -104,45 +100,70 @@ graph TD
 | | **Hugging Face (all-MiniLM)** | High-speed semantic text embeddings for Modus Operandi vectorization. |
 | **Database** | **PostgreSQL (Supabase)** | Core system logs, user schemas, and tabular crime files. |
 | | **Neo4j Aura** | Graph database for suspect networks and link analysis. |
-| | **ChromaDB (Local)** | Semantic search vector database for MO notes. |
+| | **pgvector** | Native PostgreSQL extension for embedding storage & semantic search. |
 | **Auth** | **Supabase Auth / Google OAuth** | Secure role-based dashboard access control. |
 | **AI/ML** | **Prophet** | Time-series forecasting for predicting crime trends. |
-| | **scikit-learn / PyTorch** | Anomaly detection and behavioral clustering. |
+| | **scikit-learn** | Anomaly detection and behavioral clustering. |
 | | **Pandas / NumPy** | Statistical operations, cleaning, and matrix manipulations. |
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure (Architectural Blueprint)
 
+<details open>
+<summary><b>🛠️ Backend (FastAPI + LangGraph + Celery)</b></summary>
+
+```text
+backend/
+├── alembic/           # Database schema migrations & version control
+├── api/               # API Gateway Routers (v1 REST endpoints, WebSocket)
+├── core/              # Global security configurations, CORS, Settings definitions
+├── crud/              # Data Access Layer (Relational, Vector, Graph insertions)
+├── db/                # Connection pooling & sessions (PostgreSQL, Neo4j, pgvector)
+├── llm/               # LangGraph Node pipelines, Agent prompts, fallback strategies
+├── models/            # SQLAlchemy ORM Tables (Case, DocumentEmbedding, User)
+├── schemas/           # Pydantic validation models for strict API contracts
+├── services/          # Heavy-lifting ML models (Prophet forecasting, Isolation Forest)
+├── worker/            # Celery asynchronous task definitions (Background ETLs)
+├── catalyst.json      # Zoho Catalyst AppSail deployment manifest
+├── app-config.json    # AppSail Docker container constraints (Memory/Stack)
+├── Dockerfile         # Production-ready cloud container specification
+├── main.py            # FastAPI ASGI server entry point
+└── requirements.txt   # Python 3.11+ strictly versioned dependencies
 ```
+</details>
+
+<details open>
+<summary><b>💻 Frontend (React 19 + TypeScript + Vite)</b></summary>
+
+```text
+frontend/
+├── public/            # Static media, icons, and pre-compiled Mapbox assets
+├── src/
+│   ├── components/    # Reusable Tailwind UI (Glassmorphic cards, Navbars)
+│   ├── lib/           # Utility functions, formatters, and custom hooks
+│   ├── pages/         # Core SPA Views (Dashboard, Geospatial Map, Network Graph)
+│   ├── services/      # Typed API Clients (Axios, Supabase Auth integrations)
+│   ├── store/         # Zustand global reactive state slices (Auth state, Filters)
+│   ├── App.tsx        # Application router and global context provider
+│   └── main.tsx       # React DOM mount point & strict mode wrapper
+├── Dockerfile         # Optimized multi-stage Nginx static hosting image
+├── catalyst.json      # Zoho Catalyst Web-hosting configurations
+├── package.json       # Node dependency tree and Vite build scripts
+└── vite.config.ts     # Lightning-fast bundler and alias resolution settings
+```
+</details>
+
+<details open>
+<summary><b>☁️ Infrastructure & Cloud Deployment</b></summary>
+
+```text
 Datathon/
-├── backend/
-│   ├── api/             # API Router endpoints (auth, crimes, graph, prediction)
-│   ├── core/            # System config, security, environment configurations
-│   ├── db/              # Postgres (SQLAlchemy), Neo4j drivers, ChromaDB connections
-│   ├── llm/             # LangGraph definitions, agent prompts, and models
-│   ├── models/          # Pydantic schemas & SQLAlchemy models
-│   ├── services/        # ML Forecasting, Anomaly calculations, and ETL processing
-│   ├── main.py          # FastAPI application entry point
-│   ├── Dockerfile       # Container setup for production FastAPI
-│   └── requirements.txt # Python package dependencies
-│
-├── frontend/
-│   ├── public/          # Static assets and maps
-│   ├── src/
-│   │   ├── components/  # Layouts (Sidebar, Header) and Visual cards
-│   │   ├── pages/       # Dashboard screens (Overview, Geo, Network, Predictions)
-│   │   ├── services/    # API, Neo4j, and Supabase client connectors
-│   │   ├── store/       # Zustand state management
-│   │   ├── index.css    # Global CSS definitions & Tailwind imports
-│   │   ├── App.tsx      # Core SPA layout
-│   │   └── main.tsx     # React rendering target
-│   ├── package.json     # Node script definitions & dependencies
-│   ├── vite.config.ts   # Build tool configurations
-│   └── Dockerfile       # Nginx production deployment setup
-│
-└── README.md            # Project main documentation (This file)
+├── docker-compose.yml # Local orchestration (FastAPI + Celery + Redis + Redis-commander)
+├── README.md          # Complete project technical documentation & architecture
+└── .env.example       # Global environment variable templates (DB URIs, API Keys)
 ```
+</details>
 
 ---
 
@@ -165,9 +186,6 @@ NEO4J_URI=bolt://localhost:7687
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_neo4j_password
 NEO4J_DATABASE=neo4j
-
-CHROMA_PATH=./chroma_data
-CHROMA_COLLECTION_NAME=modus_operandi
 
 REDIS_URL=rediss://default:your_password@your-upstash-endpoint:6379
 
@@ -256,3 +274,9 @@ VITE_SUPABASE_ANON_KEY=your-public-anon-key
 3. **Criminological Link Analysis:** Dynamic draggable network graph showcasing offender associations. Clicking on nodes opens profiles with their Modus Operandi timeline. Includes the "Shortest Path" relationship finder.
 4. **AI Predictive Forecasting:** Interactive forecast curves for future crimes alongside NLP-grouped MO clusters and anomaly outlier flags.
 5. **Cases Ledger:** Table of all logged cases with multi-column filtering and an input portal to report new incidents, dynamically triggering network mapping and forecasting updates.
+
+---
+<div align="center">
+  <h3>Proudly Engineered for the Karnataka State Police Datathon 2026</h3>
+  <i>Transforming raw data into actionable intelligence to empower law enforcement and keep communities safe.</i>
+</div>
